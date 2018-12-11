@@ -1,0 +1,25 @@
+// Variables
+@import "scss/variables";
+
+// Mobile
+@import "scss/base";
+
+// Tablet
+@media (min-width: 768px) {
+  @import "scss/768";
+}
+
+// Desktop
+@media (min-width: 1030px) {
+  @import "scss/1030";
+}
+
+// Larger screen
+@media (min-width: 1240px) {
+  @import "scss/1240";
+}
+
+// 4K territory
+@media (min-width: 1500) {
+  @import "scss/1500";
+}
