@@ -80,6 +80,7 @@ Body Section
     text-align: center;
     background: $RedToLightRedDown;
     border-radius: 10px;
+    padding-bottom: 1rem;
     .btn {
       background-color: $red;
     }
@@ -96,16 +97,16 @@ Body Section
     max-width: 400px;
     input {
       color: $white;
-      &:focus,
-      &:active {
-        label {
-          color: $blue;
-        }
-      }
     }
     label {
       color: $gray;
     }
+  }
+  .MuiFormLabel-root-18.MuiFormLabel-focused-19 {
+    color: $white;
+  }
+  .MuiInput-underline-29:after {
+    border-color: $red;
   }
 }
 
