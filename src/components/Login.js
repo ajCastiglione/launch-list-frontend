@@ -28,6 +28,12 @@ class Login extends Component {
     warningMsg: ""
   };
 
+  componentDidMount() {
+    if (this.props.loggedOutMsg) {
+      this.setState({ warningMsg: this.props.loggedOutMsg, warning: true });
+    }
+  }
+
   handleChange = e => {
     this.setState({ [e.target.name]: e.target.value, warning: false });
   };
