@@ -4,6 +4,11 @@
 // Mobile
 @import "scss/base";
 
+// Small tablets
+@media (min-width: 481px) {
+  @import "scss/481";
+}
+
 // Tablet
 @media (min-width: 768px) {
   @import "scss/768";

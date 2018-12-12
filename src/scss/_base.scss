@@ -8,12 +8,78 @@ Global Section
 
 body {
   font-family: $font;
+  font-weight: 400;
+}
+
+img {
+  width: 100%;
+  max-width: 300px;
+}
+
+a {
+  color: $blue;
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom: 2px solid $red;
+}
+
+.large-wrapper {
+  width: 96%;
+  margin: auto;
 }
 
 /**
 Header Section
 */
 
+.header {
+  background: $RedToLightRed;
+
+  .btn {
+    background-color: $red;
+    color: $white;
+    &:hover {
+      background-color: $lightred;
+    }
+  }
+}
+
+.header-title {
+  display: none;
+}
+
+.logo {
+  max-width: 80px;
+  margin-right: 10px;
+}
+
 /**
 Body Section
 */
+
+.main {
+  min-height: 90vh;
+}
+
+/**
+Footer Section
+*/
+
+.footer {
+  background: $RedToLightRed;
+  color: $white;
+  text-align: center;
+  border-top: 5px solid $red;
+
+  .grid-container {
+    margin: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.footer-logo {
+  max-width: 150px;
+}

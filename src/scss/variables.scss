@@ -1,6 +1,19 @@
 // Colors
+$white: #fff;
+$black: #222;
+$gray: #878787;
 $red: #7f301d;
 $lightred: #ff9d86;
+$orange: #cc4f2f;
+$blue: #073066;
 
 // Fonts
 $font: "Nunito Sans", sans-serif;
+
+// Gradients
+$RedToLightRed: linear-gradient(
+  to right,
+  rgba(127, 49, 29, 1) 0%,
+  rgba(161, 106, 93, 1) 64%,
+  rgba(255, 156, 134, 1) 100%
+);
