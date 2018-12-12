@@ -17,3 +17,10 @@ $RedToLightRed: linear-gradient(
   rgba(161, 106, 93, 1) 64%,
   rgba(255, 156, 134, 1) 100%
 );
+
+$RedToLightRedDown: linear-gradient(
+  to bottom,
+  rgba(127, 49, 29, 1) 0%,
+  rgba(201, 129, 114, 0.52) 77%,
+  rgba(255, 156, 134, 0.38) 100%
+);

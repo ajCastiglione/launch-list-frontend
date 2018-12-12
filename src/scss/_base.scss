@@ -57,8 +57,56 @@ Header Section
 Body Section
 */
 
-.main {
-  min-height: 90vh;
+// Login page
+.login-landing {
+  background-image: url("https://s3.amazonaws.com/minervalists/cityBg.jpg");
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: #444;
+  background-blend-mode: multiply;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .logo {
+    max-width: 150px;
+    display: block;
+    margin: auto;
+  }
+
+  .form {
+    max-width: 500px;
+    text-align: center;
+    background: $RedToLightRedDown;
+    border-radius: 10px;
+    .btn {
+      background-color: $red;
+    }
+  }
+  .form-title {
+    text-transform: uppercase;
+    color: $blue;
+  }
+  .icon {
+    color: $white;
+  }
+  .input-txt-container {
+    width: 100%;
+    max-width: 400px;
+    input {
+      color: $white;
+      &:focus,
+      &:active {
+        label {
+          color: $blue;
+        }
+      }
+    }
+    label {
+      color: $gray;
+    }
+  }
 }
 
 /**
