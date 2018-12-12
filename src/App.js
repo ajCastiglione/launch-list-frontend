@@ -1,16 +1,28 @@
 import React, { Component } from "react";
-import Header from "./components/Header";
-import Body from "./components/Body";
-import Footer from "./components/Footer";
+import { Route, Redirect } from "react-router-dom";
+import Login from "./components/Login";
+
 import "./App.css";
 
 class App extends Component {
+  state = {
+    loggedIn: false
+  };
+
+  signIn = (email, password) => {
+    console.log(email, password);
+  };
+
   render() {
     return (
       <div className="App">
-        <Header />
-        <Body />
-        <Footer />
+        {this.state.loggedIn ? null : <Redirect to="/login" />}
+
+        <Route
+          path="/login"
+          exact
+          render={() => <Login signIn={this.signIn} />}
+        />
       </div>
     );
   }
