@@ -4,6 +4,8 @@ import logo from "./../logo.png";
 import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Button from "@material-ui/core/Button";
+import MySnackBar from "./../displayMessages/MySnackBar";
+import amber from "@material-ui/core/colors/amber";
 import { withStyles } from "@material-ui/core/styles";
 
 const styles = theme => ({
@@ -12,6 +14,9 @@ const styles = theme => ({
   },
   button: {
     margin: theme.spacing.unit
+  },
+  warning: {
+    backgroundColor: amber[700]
   }
 });
 
@@ -24,8 +29,10 @@ class Login extends Component {
   };
 
   handleChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
+    this.setState({ [e.target.name]: e.target.value, warning: false });
   };
+
+  closeModal = () => this.setState({ warning: false });
 
   submitLogin = () => {
     let { email, password } = this.state;
@@ -44,8 +51,18 @@ class Login extends Component {
         <form className="form">
           <img className="logo" src={logo} alt="logo" />
           <h3 className="form-title">Log in</h3>
+          {this.state.warning ? (
+            <MySnackBar
+              variant="warning"
+              className={classes.margin}
+              message={this.state.warningMsg}
+              onClick={this.closeModal}
+            />
+          ) : null}
           <TextField
-            className={`${classes.margin} input-txt-container`}
+            className={`${classes.margin} ${
+              classes.MuiFormLabel
+            } input-txt-container`}
             id="email"
             label="Email"
             placeholder="Email"
@@ -55,7 +72,8 @@ class Login extends Component {
                 <InputAdornment position="start">
                   <i className="fas fa-user icon" />
                 </InputAdornment>
-              )
+              ),
+              className: classes.label
             }}
             autoFocus={true}
             required={true}
