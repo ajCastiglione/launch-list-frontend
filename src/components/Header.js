@@ -22,8 +22,21 @@ const styles = {
 };
 
 class Header extends Component {
+  state = {
+    btnText: "Login"
+  };
+
+  componentDidMount() {
+    if (this.props.loggedIn) {
+      this.setState({ btnText: "Logout" });
+    } else {
+      this.setState({ btnText: "Login" });
+    }
+  }
+
   render() {
     const { classes } = this.props;
+    const { btnText } = this.state;
     return (
       <AppBar position="static" className="header">
         <Toolbar>
@@ -31,8 +44,12 @@ class Header extends Component {
             <img src={logo} className="logo" alt="logo" />
             <span className="header-title">Minerva Organization Lists</span>
           </Typography>
-          <Button variant="contained" className="btn">
-            Login
+          <Button
+            variant="contained"
+            className="btn"
+            onClick={this.props.signOut}
+          >
+            {btnText}
           </Button>
         </Toolbar>
       </AppBar>
