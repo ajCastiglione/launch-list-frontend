@@ -1,13 +1,16 @@
 import React, { Component } from "react";
 import { Route, Redirect } from "react-router-dom";
+import Home from "./components/Home";
 import Login from "./components/Login";
-
 import "./App.css";
+// Config
+import "./config/config";
 
 class App extends Component {
   state = {
     loggedIn: false,
-    authToken: ""
+    authToken: "",
+    loggedOutMsg: ""
   };
 
   componentDidMount() {
@@ -16,10 +19,11 @@ class App extends Component {
 
   checkForToken = () => {
     if (sessionStorage.token) {
-      console.log("token found");
       this.setState({ loggedIn: true, authToken: sessionStorage.token });
+      return sessionStorage.token;
     } else {
       this.setState({ loggedIn: false });
+      return false;
     }
   };
 
@@ -39,7 +43,24 @@ class App extends Component {
         )
       )
       .catch(e => console.log(e));
-    // console.log(email, password);
+  };
+
+  signOut = e => {
+    e.preventDefault();
+    fetch("//localhost:5000/users/signout", {
+      method: "DELETE",
+      headers: {
+        "x-auth": sessionStorage.token
+      }
+    })
+      .then(res => res.json())
+      .then(response => {
+        console.log(response);
+        this.setState({ loggedIn: false, loggedOutMsg: response.success }, () =>
+          sessionStorage.removeItem("token")
+        );
+      })
+      .catch(e => console.log(e));
   };
 
   render() {
@@ -48,9 +69,22 @@ class App extends Component {
         {this.state.loggedIn ? <Redirect to="/" /> : <Redirect to="/login" />}
 
         <Route
+          path="/"
+          exact
+          render={() => (
+            <Home loggedIn={this.state.loggedIn} signOut={this.signOut} />
+          )}
+        />
+
+        <Route
           path="/login"
           exact
-          render={() => <Login signIn={this.signIn} />}
+          render={() => (
+            <Login
+              signIn={this.signIn}
+              loggedOutMsg={this.state.loggedOutMsg}
+            />
+          )}
         />
       </div>
     );
