@@ -6,7 +6,7 @@ class Home extends Component {
   render() {
     return (
       <React.Fragment>
-        <Header />
+        <Header loggedIn={this.props.loggedIn} signOut={this.props.signOut} />
         <main className="main">
           <article className="large-wrapper">
             <h1>Log in to view your open checklists or create some!</h1>
