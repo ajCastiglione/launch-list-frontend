@@ -16,6 +16,27 @@ const styles = theme => ({
 });
 
 class Login extends Component {
+  state = {
+    email: "",
+    password: "",
+    warning: false,
+    warningMsg: ""
+  };
+
+  handleChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
+  submitLogin = () => {
+    let { email, password } = this.state;
+    if (!email || !password)
+      return this.setState({
+        warning: true,
+        warningMsg: "Both email and password are required."
+      });
+    this.props.signIn(email, password);
+  };
+
   render() {
     const { classes } = this.props;
     return (
@@ -38,6 +59,9 @@ class Login extends Component {
             }}
             autoFocus={true}
             required={true}
+            autoComplete="off"
+            onChange={this.handleChange}
+            value={this.state.un}
           />
           <TextField
             className={`${classes.margin} input-txt-container`}
@@ -54,11 +78,14 @@ class Login extends Component {
               )
             }}
             required={true}
+            onChange={this.handleChange}
+            value={this.state.pw}
           />
           <Button
             variant="contained"
             color="primary"
             className={`${classes.button} btn`}
+            onClick={this.submitLogin}
           >
             Sign In
           </Button>
