@@ -29,8 +29,14 @@ class Login extends Component {
   };
 
   componentDidMount() {
-    if (this.props.loggedOutMsg) {
-      this.setState({ warningMsg: this.props.loggedOutMsg, warning: true });
+    if (this.props.resMsg) {
+      this.setState({ warningMsg: this.props.resMsg, warning: true });
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.resMsg !== "") {
+      this.setState({ warningMsg: nextProps.resMsg, warning: true });
     }
   }
 
