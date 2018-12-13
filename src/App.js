@@ -10,7 +10,7 @@ class App extends Component {
   state = {
     loggedIn: false,
     authToken: "",
-    loggedOutMsg: ""
+    resMsg: ""
   };
 
   componentDidMount() {
@@ -35,14 +35,20 @@ class App extends Component {
       },
       body: JSON.stringify({ email, password })
     })
-      .then(res => res.json())
-      .then(response =>
+      .then(res => {
+        if (res.status === 200) {
+          return res.json();
+        } else {
+          throw Error("Authenticated failed.");
+        }
+      })
+      .then(response => {
         this.setState(
           { loggedIn: true, authToken: response.code },
           () => (sessionStorage.token = response.code)
-        )
-      )
-      .catch(e => console.log(e));
+        );
+      })
+      .catch(e => this.setState({ resMsg: "Authentication failed!" }));
   };
 
   signOut = e => {
@@ -56,11 +62,17 @@ class App extends Component {
       .then(res => res.json())
       .then(response => {
         console.log(response);
-        this.setState({ loggedIn: false, loggedOutMsg: response.success }, () =>
+        this.setState({ loggedIn: false, resMsg: response.success }, () =>
           sessionStorage.removeItem("token")
         );
       })
-      .catch(e => console.log(e));
+      .catch(e => {
+        console.log(e);
+        this.setState(
+          { loggedIn: false, resMsg: "Signed out successfully" },
+          () => sessionStorage.removeItem("token")
+        );
+      });
   };
 
   render() {
@@ -80,10 +92,7 @@ class App extends Component {
           path="/login"
           exact
           render={() => (
-            <Login
-              signIn={this.signIn}
-              loggedOutMsg={this.state.loggedOutMsg}
-            />
+            <Login signIn={this.signIn} resMsg={this.state.resMsg} />
           )}
         />
       </div>
