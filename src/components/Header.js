@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import logo from "./../logo.png";
 import { withStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -44,6 +45,9 @@ class Header extends Component {
             <img src={logo} className="logo" alt="logo" />
             <span className="header-title">Minerva Organization Lists</span>
           </Typography>
+          <Link to="/profile" className="profile-btn">
+            <i className="fas fa-user user-icon" />
+          </Link>
           <Button
             variant="contained"
             className="btn"
