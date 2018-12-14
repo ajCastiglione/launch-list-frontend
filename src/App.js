@@ -1,14 +1,22 @@
 import React, { Component } from "react";
 import { Route, Redirect } from "react-router-dom";
-import Home from "./components/Home";
-import Login from "./components/Login";
 import "./App.css";
+
+// Sections
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import Login from "./components/Login";
+
+// Pages
+import Home from "./pages/Home";
+import AddList from "./pages/AddList";
+
 // Config
 import "./config/config";
 
 class App extends Component {
   state = {
-    loggedIn: false,
+    loggedIn: true,
     authToken: "",
     resMsg: ""
   };
@@ -43,10 +51,10 @@ class App extends Component {
         }
       })
       .then(response => {
-        this.setState(
-          { loggedIn: true, authToken: response.code },
-          () => (sessionStorage.token = response.code)
-        );
+        this.setState({ loggedIn: true, authToken: response.code }, () => {
+          sessionStorage.token = response.code;
+          window.location.href = "/";
+        });
       })
       .catch(e => this.setState({ resMsg: "Authentication failed!" }));
   };
@@ -61,13 +69,11 @@ class App extends Component {
     })
       .then(res => res.json())
       .then(response => {
-        console.log(response);
         this.setState({ loggedIn: false, resMsg: response.success }, () =>
           sessionStorage.removeItem("token")
         );
       })
       .catch(e => {
-        console.log(e);
         this.setState(
           { loggedIn: false, resMsg: "Signed out successfully" },
           () => sessionStorage.removeItem("token")
@@ -78,7 +84,11 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        {this.state.loggedIn ? <Redirect to="/" /> : <Redirect to="/login" />}
+        {this.state.loggedIn ? null : <Redirect to="/login" />}
+
+        {this.state.loggedIn ? (
+          <Header loggedIn={this.state.loggedIn} signOut={this.signOut} />
+        ) : null}
 
         <Route
           path="/"
@@ -95,6 +105,10 @@ class App extends Component {
             <Login signIn={this.signIn} resMsg={this.state.resMsg} />
           )}
         />
+
+        <Route path="/add-list" component={AddList} />
+
+        {this.state.loggedIn ? <Footer /> : null}
       </div>
     );
   }
