@@ -53,6 +53,20 @@ Header Section
   margin-right: 10px;
 }
 
+// profile btn
+.profile-btn {
+  color: $white;
+  border-bottom: none;
+}
+
+.user-icon {
+  margin-right: 10px;
+  background-color: $gray;
+  padding: 10px 15px;
+  border-radius: 20px;
+  box-shadow: -2px 2px 5px $black;
+}
+
 /**
 Body Section
 */
@@ -104,6 +118,23 @@ Body Section
   }
 }
 
+// Home Page
+.section-container {
+  .list-section-title {
+    background: $BrowntoOrange;
+    margin: 10px 0;
+    border-radius: 10px;
+    color: darken($white, 5%);
+    padding: 20px;
+    text-align: center;
+    text-transform: capitalize;
+  }
+}
+
+.list-container {
+  max-width: 650px;
+  margin: auto;
+}
 /**
 Footer Section
 */
