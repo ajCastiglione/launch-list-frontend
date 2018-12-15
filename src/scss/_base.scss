@@ -166,6 +166,58 @@ Body Section
   }
 }
 
+// Add List Page
+
+.add-list {
+  padding: 2rem 0;
+}
+
+.add-list-title {
+  background-image: url("https://s3.amazonaws.com/minervalists/panorama-bg.jpg");
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: $white;
+  background-color: $gray;
+  background-blend-mode: multiply;
+  margin: 0;
+  padding: 4.5rem 10px;
+  font-size: 35px;
+  text-align: center;
+  text-transform: capitalize;
+}
+
+.add-list-subtitle {
+  text-transform: capitalize;
+  color: $blue;
+  margin: 15px 0;
+}
+
+.form-grid {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  justify-content: center;
+  text-align: center;
+  margin: 2rem 0 0 !important;
+  width: 100% !important;
+
+  .input-txt-container {
+    margin: 10px auto;
+    width: 100%;
+    max-width: 350px;
+    input {
+      width: 100%;
+    }
+  }
+}
+
+.grid-left,
+.grid-right {
+  background-color: #f4f4f4;
+  border-radius: 5px;
+}
+
 /**
 Footer Section
 */

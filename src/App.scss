@@ -14,6 +14,11 @@
   @import "scss/768";
 }
 
+// Tablet
+@media (min-width: 960px) {
+  @import "scss/960";
+}
+
 // Desktop
 @media (min-width: 1030px) {
   @import "scss/1030";
