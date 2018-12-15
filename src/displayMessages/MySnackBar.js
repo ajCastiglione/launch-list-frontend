@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
@@ -53,6 +54,7 @@ class MySnackbarContent extends Component {
       message,
       onClose,
       variant,
+      target,
       ...other
     } = this.props;
     const Icon = variantIcon[variant];
@@ -63,7 +65,12 @@ class MySnackbarContent extends Component {
         message={
           <span id="client-snackbar" className={classes.message}>
             <Icon className={classNames(classes.icon, classes.iconVariant)} />
-            {message}
+            {message}{" "}
+            {target ? (
+              <Link className="view-list-btn" to={`/lists/${target}`}>
+                View List
+              </Link>
+            ) : null}
           </span>
         }
         action={[
