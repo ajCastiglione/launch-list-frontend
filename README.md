@@ -47,7 +47,7 @@ This app will have 5 set lists to choose from.
 <li>Links are easily recognisable and have a clear focus state</li>
 <li>All form fields have associated labels (not placeholder text)</li>
 <li>ARIA landmark roles used where appropriate</li>
-<li>Colour contrast is appropriate</li>
+<li>Color contrast is appropriate</li>
 
 <h3>Infrastructure</h3>
 <li>Domain name and web hosting set up and linked</li>
@@ -75,7 +75,9 @@ This app will have 5 set lists to choose from.
 <li>Final check on multiple devices (desktop, laptop, tablet, phone)</li>
 <li>Take backup of website</li>
 </ul>
+
 <hr>
+
 <h2>Live list</h2>
 <p>The Live list will contain the following:</p>
 <ul>
@@ -120,3 +122,24 @@ This app will have 5 set lists to choose from.
 <li>React</li>
 <li>React Router</li>
 </ul>
+
+#TODO
+
+## Lists
+
+<ol>
+<li>Figure out routing for viewing single lists - will be using ID in url to view specific list</li>
+<li>Add routing for viewing all lists</li>
+<li>Ensure updating list items works as intended</li>
+<li>Will work on CRUD abilities for lists once the routes are in place and have all necessary information</li>
+</ol>
+
+## Users
+
+<ol>
+<li>Will need a signup route protected by a specific password</li>
+<li>Will need a route to add users once signed in, and verify user is superadmin or some shit</li>
+<li>Ability to view all users</li>
+<li>CRUD abilities panel for superadmin</li>
+<li>Update User schema on server to include username space and other customizable poritions as needed</li>
+</ol>
