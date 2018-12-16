@@ -218,6 +218,14 @@ Body Section
   border-radius: 5px;
 }
 
+.success-msg {
+  a {
+    color: $white;
+    border-bottom: 2px solid $blue;
+    margin-left: 10px;
+  }
+}
+
 /**
 Footer Section
 */

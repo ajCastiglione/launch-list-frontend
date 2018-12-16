@@ -10,6 +10,7 @@ import Login from "./components/Login";
 // Pages
 import Home from "./pages/Home";
 import AddList from "./pages/AddList";
+import AllLists from "./pages/AllLists";
 
 // Config
 import "./config/config";
@@ -107,6 +108,8 @@ class App extends Component {
         />
 
         <Route path="/add-list" component={AddList} />
+
+        <Route path="/all-lists" component={AllLists} />
 
         {this.state.loggedIn ? <Footer /> : null}
       </div>
