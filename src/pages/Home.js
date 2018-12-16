@@ -1,15 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
-/**
- Layout will be as follows:
- - First section will be open todo lists or btn leading to creation route
- - Second section will be open launch lists or btn leading to creation route
- - Third section will be open ecom lists or btn leading to creation route
- - Fourth section will be open live lists or btn leading to creation route
- - Fifth section will be open ecom live lists or btn leading to creation route
-*/
-
 class Home extends Component {
   render() {
     return (
