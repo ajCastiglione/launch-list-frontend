@@ -162,11 +162,11 @@ class AddList extends Component {
                       <MenuItem value="">
                         <em>None</em>
                       </MenuItem>
-                      <MenuItem value="todo-list">Todo List</MenuItem>
-                      <MenuItem value="launch-list">Launch List</MenuItem>
-                      <MenuItem value="live-list">Live List</MenuItem>
-                      <MenuItem value="ecom-list">Ecommerce List</MenuItem>
-                      <MenuItem value="ecom-live-list">
+                      <MenuItem value="todo_list">Todo List</MenuItem>
+                      <MenuItem value="launch_list">Launch List</MenuItem>
+                      <MenuItem value="live_list">Live List</MenuItem>
+                      <MenuItem value="ecom_list">Ecommerce List</MenuItem>
+                      <MenuItem value="ecom_live_list">
                         Ecommerce Live List
                       </MenuItem>
                     </Select>
