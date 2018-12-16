@@ -39,13 +39,14 @@ class AddList extends Component {
   state = {
     listType: "",
     listName: "",
-    associatedClient: "",
+    website: "",
     labelWidth: 0,
     listID: null,
     success: false,
     successMsg: "",
     warning: false,
-    warningMsg: ""
+    warningMsg: "",
+    failure: false
   };
 
   componentDidMount() {
@@ -54,41 +55,53 @@ class AddList extends Component {
     });
   }
 
-  closeModal = () => this.setState({ warning: false, success: false });
+  closeModal = () =>
+    this.setState({ warning: false, success: false, failure: false });
 
   handleChange = e => {
     this.setState({
       [e.target.name]: e.target.value,
       warning: false,
-      success: false
+      success: false,
+      failure: false
     });
   };
 
   handleSubmit = e => {
     e.preventDefault();
-    let { listType } = this.state;
-    if (!listType)
-      return this.setState({ warning: true, warningMsg: "Enter a type" });
+    let { listType, listName } = this.state;
+    if (!listType || !listName)
+      return this.setState({
+        warning: true,
+        warningMsg: "Name of website and list type are required."
+      });
     fetch("//localhost:5000/lists", {
       method: "POST",
       headers: {
         "x-auth": sessionStorage.token,
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ type: listType })
+      body: JSON.stringify({ type: listType, listName })
     })
       .then(res => {
         if (res.status === 200) {
           return res.json();
         } else {
-          throw Error("Authenticated failed.");
+          this.setState({
+            warning: true,
+            failure: true,
+            warningMsg: "List name must be unique."
+          });
+          throw Error("Duplicate key");
         }
       })
       .then(res => {
         this.setState({
           success: true,
           successMsg: "List created successfully!",
-          listID: res._id
+          listID: res._id,
+          listName: "",
+          listType: ""
         });
       })
       .catch(e => console.error(e));
@@ -97,64 +110,75 @@ class AddList extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <article className="add-list-article">
-        <h1 className="add-list-title">Generate new list</h1>
-        <section className="section-container add-list large-wrapper">
-          <form className="add-list-form" action="">
-            {this.state.warning ? (
-              <MySnackBar
-                variant="warning"
-                className={classes.margin}
-                message={this.state.warningMsg}
-                onClick={this.closeModal}
-              />
-            ) : this.state.success ? (
-              <MySnackBar
-                variant="success"
-                className={classes.margin}
-                message={this.state.successMsg}
-                target={this.state.listName}
-                onClick={this.closeModal}
-              />
-            ) : null}
-            <Grid container spacing={24} className="form-grid">
-              <Grid className="grid-left" item xs={12} md={6} lg={5}>
-                <h2 className="add-list-subtitle">select the type of list:</h2>
-                <FormControl variant="outlined" className={classes.formControl}>
-                  <InputLabel
-                    ref={ref => {
-                      this.InputLabelRef = ref;
-                    }}
-                    htmlFor="outlined-label"
+      <main className="main">
+        <article className="add-list-article">
+          <h1 className="add-list-title">Generate new list</h1>
+          <section className="section-container add-list large-wrapper">
+            <form className="add-list-form" action="">
+              {this.state.warning ? (
+                <MySnackBar
+                  variant={this.state.failure ? "error" : "warning"}
+                  className={classes.margin}
+                  message={this.state.warningMsg}
+                  onClick={this.closeModal}
+                />
+              ) : this.state.success ? (
+                <MySnackBar
+                  variant="success"
+                  className={`${classes.margin} success-msg`}
+                  message={this.state.successMsg}
+                  target={this.state.listID}
+                  onClick={this.closeModal}
+                />
+              ) : null}
+              <Grid container spacing={24} className="form-grid">
+                <Grid className="grid-left" item xs={12} md={6} lg={5}>
+                  <h2 className="add-list-subtitle">
+                    select the type of list:
+                  </h2>
+                  <FormControl
+                    variant="outlined"
+                    className={classes.formControl}
                   >
-                    List Type
-                  </InputLabel>
-                  <Select
-                    value={this.state.listType}
-                    onChange={this.handleChange}
-                    input={
-                      <OutlinedInput
-                        labelWidth={this.state.labelWidth}
-                        name="listType"
-                        id="outlined-label"
-                      />
-                    }
-                  >
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    <MenuItem value="todo-list">Todo List</MenuItem>
-                    <MenuItem value="launch-list">Launch List</MenuItem>
-                    <MenuItem value="live-list">Live List</MenuItem>
-                    <MenuItem value="ecom-list">Ecommerce List</MenuItem>
-                    <MenuItem value="ecom-live-list">
-                      Ecommerce Live List
-                    </MenuItem>
-                  </Select>
-                </FormControl>
-                {this.state.listType === "todo-list" ? (
+                    <InputLabel
+                      ref={ref => {
+                        this.InputLabelRef = ref;
+                      }}
+                      htmlFor="outlined-label"
+                    >
+                      List Type
+                    </InputLabel>
+                    <Select
+                      value={this.state.listType}
+                      onChange={this.handleChange}
+                      input={
+                        <OutlinedInput
+                          labelWidth={this.state.labelWidth}
+                          name="listType"
+                          id="outlined-label"
+                        />
+                      }
+                    >
+                      <MenuItem value="">
+                        <em>None</em>
+                      </MenuItem>
+                      <MenuItem value="todo-list">Todo List</MenuItem>
+                      <MenuItem value="launch-list">Launch List</MenuItem>
+                      <MenuItem value="live-list">Live List</MenuItem>
+                      <MenuItem value="ecom-list">Ecommerce List</MenuItem>
+                      <MenuItem value="ecom-live-list">
+                        Ecommerce Live List
+                      </MenuItem>
+                    </Select>
+                  </FormControl>
+
                   <React.Fragment>
-                    <h2 className="add-list-subtitle">List Name:</h2>
+                    <h2 className="add-list-subtitle">
+                      {this.state.listType === "todo-list"
+                        ? "List Name: "
+                        : "Website Name: "}
+                      {this.state.listName}
+                    </h2>
                     <TextField
                       label="List Name"
                       name="listName"
@@ -165,32 +189,22 @@ class AddList extends Component {
                       margin="normal"
                     />
                   </React.Fragment>
-                ) : null}
-                <h2 className="add-list-subtitle">Website Name:</h2>
-                <TextField
-                  label="Website"
-                  name="website"
-                  className={`${classes.textField} input-txt-container`}
-                  value={this.state.website}
-                  onChange={this.handleChange}
-                  placeholder="Website"
-                  margin="normal"
-                />
+                </Grid>
+                <Grid className="grid-right" item xs={12} md={6} lg={5}>
+                  <h2 className="add-list-subtitle">submit new list</h2>
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    onClick={this.handleSubmit}
+                  >
+                    Create List
+                  </Button>
+                </Grid>
               </Grid>
-              <Grid className="grid-right" item xs={12} md={6} lg={5}>
-                <h2 className="add-list-subtitle">submit new list</h2>
-                <Button
-                  variant="outlined"
-                  color="primary"
-                  onClick={this.handleSubmit}
-                >
-                  Create List
-                </Button>
-              </Grid>
-            </Grid>
-          </form>
-        </section>
-      </article>
+            </form>
+          </section>
+        </article>
+      </main>
     );
   }
 }
