@@ -125,6 +125,17 @@ This app will have 5 set lists to choose from.
 
 # TODO
 
+## App
+
+<ol>
+<li>Add navigation</li>
+<li>Change color scheme, not liking the red combo anymore</li>
+<li>/all-lists - Figure out better layout for all lists page. Ugly</li>
+<li>/ - Display list types and total counts on home page on right side, will figure out main content</li>
+<li>/lists/:type - Add functionality to delete btn, probably bind through props to App.js</li>
+<li>/list/:id - Create page that displays the selected list. Add CRUD abilities here</li>
+</ol>
+
 ## Lists
 
 <ol>
