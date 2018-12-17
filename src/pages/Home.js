@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 class Home extends Component {
   render() {
     return (
-      <main className="main">
+      <React.Fragment>
         <article className="home-article large-wrapper">
           <section className="section-container todo-section">
             <div className="list-container">
@@ -68,7 +68,7 @@ class Home extends Component {
             </div>
           </section>
         </article>
-      </main>
+      </React.Fragment>
     );
   }
 }

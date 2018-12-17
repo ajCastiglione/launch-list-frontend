@@ -110,7 +110,7 @@ class AddList extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <main className="main">
+      <React.Fragment>
         <article className="add-list-article">
           <h1 className="add-list-title">Generate new list</h1>
           <section className="section-container add-list large-wrapper">
@@ -204,7 +204,7 @@ class AddList extends Component {
             </form>
           </section>
         </article>
-      </main>
+      </React.Fragment>
     );
   }
 }

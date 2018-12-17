@@ -74,7 +74,7 @@ class AllLists extends Component {
     );
 
     return (
-      <main className="main">
+      <React.Fragment>
         <article className="all-lists-article large-wrapper">
           <section className="section-container all-lists-section">
             <div className="list-container">
@@ -131,7 +131,7 @@ class AllLists extends Component {
             </div>
           </section>
         </article>
-      </main>
+      </React.Fragment>
     );
   }
 }
