@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 class AllLists extends Component {
   state = {
+    all_lists: [],
     todo_list: [],
     launch_list: [],
     live_list: [],
@@ -31,12 +32,43 @@ class AllLists extends Component {
         res.lists.map((el, idx) => {
           let temp = this.state[el.type];
           temp.push(el);
-          // Limiting display to 5, will have btn to view all lists of that selected type (still figuring out this route)
           if (temp.length >= 5) temp = temp.slice(0, 5);
           return this.setState({ [el.type]: temp });
         });
 
-        this.setState({ listsAcquired: true });
+        let allStateLists = [
+          {
+            title: "Todo Lists",
+            array: this.state.todo_list,
+            url: "all-todos",
+            type: "todo_list"
+          },
+          {
+            title: "Laucnh Lists",
+            array: this.state.launch_list,
+            url: "all-launch",
+            type: "launch_list"
+          },
+          {
+            title: "Live Lists",
+            array: this.state.live_list,
+            url: "all-live",
+            type: "live_list"
+          },
+          {
+            title: "Ecommerce Lists",
+            array: this.state.ecom_list,
+            url: "all-ecom",
+            type: "ecom_list"
+          },
+          {
+            title: "Ecommerce Live Lists",
+            array: this.state.ecom_live_list,
+            url: "all-ecom-live",
+            type: "ecom_live_list"
+          }
+        ];
+        this.setState({ listsAcquired: true, all_lists: allStateLists });
       })
       .catch(e => console.error(e));
   };
@@ -46,27 +78,43 @@ class AllLists extends Component {
   };
 
   render() {
-    const todos = this.state.listsAcquired ? (
-      <React.Fragment>
-        {this.state.todo_list.map((el, idx) => (
-          <div className="todo-list" key={`todos-${idx}`}>
-            <h2>
-              {el.listName} -{" "}
-              <small>{el.completed ? "Completed" : "Incomplete"}</small>
-            </h2>
+    const allfuckinlists = this.state.listsAcquired ? (
+      this.state.all_lists.map((arr, index) => (
+        <div className="list-container" key={`list-container-${index}`}>
+          <h2 className="list-section-title">{arr.title}</h2>
+          <div className="active-lists">
+            {arr.array.length === 0 ? (
+              <p className="empty-lists">
+                Looks like there aren't any lists to display for this section.{" "}
+                <Link to="/add-list" className="link-btn">
+                  Go here to generate a new list!
+                </Link>
+              </p>
+            ) : (
+              arr.array.map((el, idx) => (
+                <div className="todo-list" key={`todos-${idx}`}>
+                  <h2>
+                    {el.listName} -{" "}
+                    <small>{el.completed ? "Completed" : "Incomplete"}</small>
+                  </h2>
+                </div>
+              ))
+            )}
           </div>
-        ))}
-        <Link
-          className="link-btn"
-          to="/lists/all-todos"
-          onMouseOver={() => this.handleMO("todo_list")}
-        >
-          view all todos
-        </Link>
-      </React.Fragment>
+          {arr.array.length === 0 ? null : (
+            <Link
+              className="link-btn"
+              to={`/lists/${arr.url}`}
+              onMouseOver={() => this.handleMO(arr.type)}
+            >
+              view all todos
+            </Link>
+          )}
+        </div>
+      ))
     ) : (
-      <p className="empty-lists">
-        Looks like there aren't any lists to display for this section.{" "}
+      <p className="no-lists">
+        Looks like there aren't any lists to display for all sections.{" "}
         <Link to="/add-list" className="link-btn">
           Go here to generate a new list!
         </Link>
@@ -77,58 +125,7 @@ class AllLists extends Component {
       <React.Fragment>
         <article className="all-lists-article large-wrapper">
           <section className="section-container all-lists-section">
-            <div className="list-container">
-              <h2 className="list-section-title">Todo Lists</h2>
-              <div className="active-lists">{todos}</div>
-            </div>
-          </section>
-          <section className="section-container live-section">
-            <div className="list-container">
-              <h2 className="list-section-title">launch Lists</h2>
-              <div className="active-lists">
-                <p className="empty-lists">
-                  Looks like there aren't any lists to display for this section.{" "}
-                  <Link to="/add-list" className="link-btn">
-                    Go here to generate a new list!
-                  </Link>
-                </p>
-              </div>
-            </div>
-            <div className="list-container">
-              <h2 className="list-section-title">live Lists</h2>
-              <div className="active-lists">
-                <p className="empty-lists">
-                  Looks like there aren't any lists to display for this section.{" "}
-                  <Link to="/add-list" className="link-btn">
-                    Go here to generate a new list!
-                  </Link>
-                </p>
-              </div>
-            </div>
-          </section>
-          <section className="section-container ecom-section">
-            <div className="list-container">
-              <h2 className="list-section-title">ecommerce Lists</h2>
-              <div className="active-lists">
-                <p className="empty-lists">
-                  Looks like there aren't any lists to display for this section.{" "}
-                  <Link to="/add-list" className="link-btn">
-                    Go here to generate a new list!
-                  </Link>
-                </p>
-              </div>
-            </div>
-            <div className="list-container">
-              <h2 className="list-section-title">ecommerce live Lists</h2>
-              <div className="active-lists">
-                <p className="empty-lists">
-                  Looks like there aren't any lists to display for this section.{" "}
-                  <Link to="/add-list" className="link-btn">
-                    Go here to generate a new list!
-                  </Link>
-                </p>
-              </div>
-            </div>
+            {allfuckinlists}
           </section>
         </article>
       </React.Fragment>
