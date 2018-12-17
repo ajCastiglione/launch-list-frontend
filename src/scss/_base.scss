@@ -226,6 +226,50 @@ Body Section
   }
 }
 
+// All lists pg
+.list-item-title {
+  text-transform: capitalize;
+}
+
+.active-lists {
+  .link-btn {
+    display: block;
+    width: 60%;
+    margin: auto;
+    text-transform: capitalize;
+    text-align: center;
+    margin-top: 15px;
+  }
+}
+
+.empty-lists {
+  .link-btn {
+    display: inline-block;
+    width: auto;
+  }
+}
+
+.lists-info-grid {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  text-align: center;
+  border-bottom: 2px solid $red;
+  margin-bottom: 15px !important;
+}
+
+// Single Type View
+.list-table {
+  margin-bottom: 2rem;
+  .section-container {
+    padding: 1rem 2rem;
+  }
+  .btn {
+    color: $white;
+    border: none;
+  }
+}
+
 /**
 Footer Section
 */
