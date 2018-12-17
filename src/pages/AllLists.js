@@ -8,7 +8,8 @@ class AllLists extends Component {
     live_list: [],
     ecom_list: [],
     ecom_live_list: [],
-    listsAcquired: false
+    listsAcquired: false,
+    listType: ""
   };
 
   componentDidMount() {
@@ -30,33 +31,55 @@ class AllLists extends Component {
         res.lists.map((el, idx) => {
           let temp = this.state[el.type];
           temp.push(el);
+          // Limiting display to 5, will have btn to view all lists of that selected type (still figuring out this route)
+          if (temp.length >= 5) temp = temp.slice(0, 5);
           return this.setState({ [el.type]: temp });
         });
+
         this.setState({ listsAcquired: true });
       })
       .catch(e => console.error(e));
   };
 
+  handleMO = type => {
+    this.props.updateListType(type);
+  };
+
   render() {
+    const todos = this.state.listsAcquired ? (
+      <React.Fragment>
+        {this.state.todo_list.map((el, idx) => (
+          <div className="todo-list" key={`todos-${idx}`}>
+            <h2>
+              {el.listName} -{" "}
+              <small>{el.completed ? "Completed" : "Incomplete"}</small>
+            </h2>
+          </div>
+        ))}
+        <Link
+          className="link-btn"
+          to="/lists/all-todos"
+          onMouseOver={() => this.handleMO("todo_list")}
+        >
+          view all todos
+        </Link>
+      </React.Fragment>
+    ) : (
+      <p className="empty-lists">
+        Looks like there aren't any lists to display for this section.{" "}
+        <Link to="/add-list" className="link-btn">
+          Go here to generate a new list!
+        </Link>
+      </p>
+    );
+
     return (
       <main className="main">
         <article className="all-lists-article large-wrapper">
           <section className="section-container all-lists-section">
             <div className="list-container">
               <h2 className="list-section-title">Todo Lists</h2>
-              <div className="active-lists">
-                {this.state.listsAcquired ? (
-                  this.state.todo_list.map((el, idx) => <h2>{el.listName}</h2>)
-                ) : (
-                  <p className="empty-lists">
-                    Looks like there aren't any lists to display for this
-                    section.{" "}
-                    <Link to="/add-list" className="link-btn">
-                      Go here to generate a new list!
-                    </Link>
-                  </p>
-                )}
-              </div>
+              <div className="active-lists">{todos}</div>
             </div>
           </section>
           <section className="section-container live-section">
