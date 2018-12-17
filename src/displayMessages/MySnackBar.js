@@ -67,7 +67,7 @@ class MySnackbarContent extends Component {
             <Icon className={classNames(classes.icon, classes.iconVariant)} />
             {message}{" "}
             {target ? (
-              <Link className="view-list-btn" to={`/lists/${target}`}>
+              <Link className="view-list-btn" to={`/list/${target}`}>
                 View List
               </Link>
             ) : null}
