@@ -133,6 +133,7 @@ This app will have 5 set lists to choose from.
 <li>/all-lists - Figure out better layout for all lists page. Ugly</li>
 <li>/ - Display list types and total counts on home page on right side, will figure out main content</li>
 <li>/lists/:type - Add functionality to delete btn, probably bind through props to App.js</li>
+<li>/lists/:type - Add searchbar at top of component. Will add new state to handle this</li>
 <li>/list/:id - Create page that displays the selected list. Add CRUD abilities here</li>
 </ol>
 
