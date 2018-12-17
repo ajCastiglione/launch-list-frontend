@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import MySnackBar from "./../../displayMessages/MySnackBar";
 
 // UI Lib
 import { withStyles } from "@material-ui/core/styles";
@@ -29,7 +30,8 @@ class Lists extends Component {
       : sessionStorage.listType,
     lists: [],
     receivedLists: false,
-    items_completed: 0
+    searchResults: [],
+    defaultLists: []
   };
 
   componentDidMount() {
@@ -49,16 +51,42 @@ class Lists extends Component {
           : new Error("Could not authenticate and acquire lists.")
       )
       .then(res => {
-        this.setState({ lists: res.lists, receivedLists: true });
+        this.setState({
+          lists: res.lists,
+          receivedLists: true,
+          searchResults: res.lists,
+          defaultLists: res.lists
+        });
       })
       .catch(e => console.error(e));
+  };
+
+  handleSearch = e => {
+    let { value } = e.target;
+    let { lists } = this.state;
+    let temp = [];
+
+    lists.map(list => {
+      if (list.listName.includes(value) && value) {
+        temp.push(list);
+        this.setState({ searchResults: temp, noMatch: false });
+      } else if (temp.length === 0 && value) {
+        this.setState({
+          searchResults: this.state.defaultLists,
+          noMatch: true,
+          msg: "No results"
+        });
+      } else {
+        this.setState({ noMatch: false });
+      }
+    });
   };
 
   render() {
     const { classes } = this.props;
     const { listType, receivedLists } = this.state;
     const lists = receivedLists
-      ? this.state.lists.map(el => (
+      ? this.state.searchResults.map(el => (
           <TableRow key={el._id}>
             <TableCell component="th" scope="row">
               {el.listName}
@@ -92,26 +120,47 @@ class Lists extends Component {
         ))
       : null;
     return (
-      <article className={`list-table ${listType}`}>
-        <section className="section-container">
-          <Paper className={classes.root}>
-            <Table className={classes.table}>
-              <TableHead>
-                <TableRow>
-                  <TableCell>{listType}s (All Lists)</TableCell>
-                  <TableCell>Type</TableCell>
-                  <TableCell>Items</TableCell>
-                  <TableCell>Status</TableCell>
-                  <TableCell>Date Created</TableCell>
-                  <TableCell>View</TableCell>
-                  <TableCell>Delete</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>{lists}</TableBody>
-            </Table>
-          </Paper>
-        </section>
-      </article>
+      <React.Fragment>
+        <div className="search-bar-container">
+          <input
+            id="search"
+            placeholder="Search..."
+            type="search"
+            onChange={this.handleSearch}
+          />
+          {this.state.noMatch ? (
+            <div className="warning">
+              <MySnackBar
+                variant="warning"
+                className={classes.margin}
+                message={this.state.msg}
+                onClick={this.closeModal}
+              />
+            </div>
+          ) : null}
+        </div>
+
+        <article className={`list-table ${listType}`}>
+          <section className="section-container">
+            <Paper className={classes.root}>
+              <Table className={classes.table}>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>{listType}s (All Lists)</TableCell>
+                    <TableCell>Type</TableCell>
+                    <TableCell>Items</TableCell>
+                    <TableCell>Status</TableCell>
+                    <TableCell>Date Created</TableCell>
+                    <TableCell>View</TableCell>
+                    <TableCell>Delete</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>{lists}</TableBody>
+              </Table>
+            </Paper>
+          </section>
+        </article>
+      </React.Fragment>
     );
   }
 }
