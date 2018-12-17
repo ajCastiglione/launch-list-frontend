@@ -259,6 +259,25 @@ Body Section
 }
 
 // Single Type View
+.search-bar-container {
+  input {
+    width: 100%;
+    display: block;
+    border-radius: 0;
+    border-bottom: 3px solid $red;
+    padding: 1.5rem 10px 10px;
+    color: $red;
+    font-size: 20px;
+    &:active,
+    &:focus {
+      outline: 1px solid $red;
+    }
+  }
+  .warning > div {
+    margin: 10px auto 0;
+  }
+}
+
 .list-table {
   margin-bottom: 2rem;
   .section-container {
