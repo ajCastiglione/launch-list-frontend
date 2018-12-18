@@ -69,15 +69,15 @@ class Lists extends Component {
     lists.map(list => {
       if (list.listName.includes(value) && value) {
         temp.push(list);
-        this.setState({ searchResults: temp, noMatch: false });
+        return this.setState({ searchResults: temp, noMatch: false });
       } else if (temp.length === 0 && value) {
-        this.setState({
+        return this.setState({
           searchResults: this.state.defaultLists,
           noMatch: true,
-          msg: "No results"
+          msg: `No results for ${value}`
         });
       } else {
-        this.setState({ noMatch: false });
+        return this.setState({ noMatch: false });
       }
     });
   };
@@ -96,14 +96,14 @@ class Lists extends Component {
             <TableCell>{el.completed ? "Complete" : "Incomplete"}</TableCell>
             <TableCell>
               {el.createdAt
-                ? `${new Date(el.createdAt).getMonth()}/${new Date(
+                ? `${new Date(el.createdAt).getMonth() + 1}/${new Date(
                     el.createdAt
-                  ).getDate() + 1}/${new Date(el.createdAt).getFullYear()}`
+                  ).getDate()}/${new Date(el.createdAt).getFullYear()}`
                 : "No date found."}{" "}
             </TableCell>
             <TableCell>
               <Button variant="contained" color="primary">
-                <Link to={`/list/${el._id}`} className="btn">
+                <Link to={`/list?id=${el._id}`} className="btn">
                   View
                 </Link>
               </Button>
@@ -127,7 +127,12 @@ class Lists extends Component {
             placeholder="Search..."
             type="search"
             onChange={this.handleSearch}
+            autoComplete="off"
           />
+          <Link to="/all-lists" className="btn">
+            <i className="fas fa-caret-left" />
+            Return to all lists
+          </Link>
           {this.state.noMatch ? (
             <div className="warning">
               <MySnackBar
