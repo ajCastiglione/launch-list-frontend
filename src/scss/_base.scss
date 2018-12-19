@@ -54,6 +54,38 @@ Header Section
   margin-right: 10px;
 }
 
+// Navigation
+.nav {
+  background: $newGrad;
+  border-top: 2px solid $blue;
+}
+
+.nav-title-container {
+  color: $white;
+  display: flex;
+  align-items: center;
+
+  .nav-title {
+    margin: 0;
+    margin-left: 10px;
+    font-size: 22px;
+  }
+}
+
+.nav-item {
+  padding: 0 !important;
+  a {
+    display: inline-block;
+    width: 100%;
+    padding: 11px 24px;
+    color: $red;
+  }
+  .signout-btn {
+    display: block;
+    margin: auto;
+  }
+}
+
 // profile btn
 .profile-btn {
   color: $white;
@@ -173,7 +205,7 @@ Body Section
   padding: 2rem 0;
 }
 
-.add-list-title {
+.article-title {
   background-image: url("https://s3.amazonaws.com/minervalists/panorama-bg.jpg");
   background-position: center center;
   background-size: cover;
