@@ -30,3 +30,12 @@ Body Section
     max-width: 400px;
   }
 }
+
+// Single Type View
+.btn-container {
+  justify-content: space-between;
+  flex-direction: row;
+  button {
+    margin: 0;
+  }
+}
