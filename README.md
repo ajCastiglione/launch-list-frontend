@@ -135,6 +135,7 @@ This app will have 5 set lists to choose from.
 <li>/lists/:type - Add functionality to delete btn, probably bind through props to App.js</li>
 <li>/lists/:type - Add searchbar at top of component. Will add new state to handle this</li>
 <li>/list/:id - Create page that displays the selected list. Add CRUD abilities here</li>
+<li>/lists/:type - fix search feature. Clearing all input with crtl+bksp messes up display results</li>
 </ol>
 
 ## Lists
@@ -144,6 +145,10 @@ This app will have 5 set lists to choose from.
 <li>Add routing for viewing all lists</li>
 <li>Ensure updating list items works as intended</li>
 <li>Will work on CRUD abilities for lists once the routes are in place and have all necessary information</li>
+<li>Add ability to delete item</li>
+<li>Fix percentage calc</li>
+<li>Handle errors: cant access list, cant find list, no list id in url</li>
+<li>Create comment section. Figure out how to make it a wsywig like editor (maybe - maybe not)</li>
 </ol>
 
 ## Users
