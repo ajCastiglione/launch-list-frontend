@@ -12,6 +12,7 @@ import Home from "./pages/Home";
 import AddList from "./pages/AddList";
 import AllLists from "./pages/AllLists";
 import Lists from "./pages/views/Lists";
+import List from "./pages/views/List";
 
 // Config
 import "./config/config";
@@ -125,6 +126,8 @@ class App extends Component {
           path="/lists/:listType"
           render={() => <Lists listType={this.state.listType} />}
         />
+
+        <Route path="/list" component={List} />
 
         {this.state.loggedIn ? <Footer /> : null}
       </main>
