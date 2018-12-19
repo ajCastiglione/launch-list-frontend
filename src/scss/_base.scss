@@ -310,6 +310,94 @@ Body Section
   }
 }
 
+// Single List View
+.single-list-view {
+  background-color: #f6f9fc;
+  padding: 1rem 0;
+  .list {
+    padding-bottom: 1.5rem;
+    position: relative;
+  }
+  .add-btn {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: $red;
+    &:hover {
+      background-color: $lightred;
+    }
+  }
+}
+
+.label {
+  display: block;
+  position: relative;
+  padding: 10px 0 10px 40px;
+  cursor: pointer;
+  font-size: 22px;
+  user-select: none;
+  background-color: $white;
+
+  .checkbox {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+    &:checked ~ .checkmark {
+      background-color: $lightred;
+      &:after {
+        display: block;
+      }
+    }
+  }
+
+  .checkmark {
+    position: absolute;
+    top: 11px;
+    left: 5px;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+    &:after {
+      content: "";
+      position: absolute;
+      display: none;
+      left: 9px;
+      top: 5px;
+      width: 5px;
+      height: 10px;
+      border: solid white;
+      border-width: 0 3px 3px 0;
+      transform: rotate(45deg);
+    }
+  }
+  &:hover .checkbox ~ .checkmark {
+    background-color: #ccc;
+  }
+  &:hover .checkbox:checked ~ .checkmark {
+    background-color: $red;
+  }
+}
+
+.list {
+  margin-top: 1rem;
+}
+
+#progress-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: $RedToLightRed;
+  color: $white;
+  padding: 1.3rem 10px;
+}
+
+.new-item-input-container {
+  display: flex;
+  align-items: flex-end;
+}
+
 /**
 Footer Section
 */
@@ -353,4 +441,34 @@ Animations
   width: 60px;
   height: 60px;
   animation: spinner 1.2s linear infinite;
+}
+
+@keyframes selectedItem {
+  0% {
+    background-color: $white;
+  }
+  100% {
+    background-color: #e1e1e1;
+    color: $green;
+  }
+}
+
+label.cl-selected {
+  animation: selectedItem 0.3s linear;
+  animation-fill-mode: forwards;
+}
+
+@keyframes unselectedItem {
+  0% {
+    background-color: #e1e1e1;
+    color: $green;
+  }
+  100% {
+    background-color: $white;
+  }
+}
+
+label.cl-deselected {
+  animation: unselectedItem 0.3s linear;
+  animation-fill-mode: forwards;
 }
