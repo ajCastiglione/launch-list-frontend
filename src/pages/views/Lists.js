@@ -139,7 +139,6 @@ class Lists extends Component {
                 variant="warning"
                 className={classes.margin}
                 message={this.state.msg}
-                onClick={this.closeModal}
               />
             </div>
           ) : null}
