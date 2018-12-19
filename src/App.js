@@ -127,7 +127,10 @@ class App extends Component {
           render={() => <Lists listType={this.state.listType} />}
         />
 
-        <Route path="/list" component={List} />
+        <Route
+          path="/list"
+          render={() => <List listType={this.state.listType} />}
+        />
 
         {this.state.loggedIn ? <Footer /> : null}
       </main>
