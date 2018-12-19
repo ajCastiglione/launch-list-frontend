@@ -50,31 +50,26 @@ class AllLists extends Component {
           {
             title: "Todo Lists",
             array: this.state.todo_list,
-            url: "all-todos",
             type: "todo_list"
           },
           {
             title: "Launch Lists",
             array: this.state.launch_list,
-            url: "all-launch",
             type: "launch_list"
           },
           {
             title: "Live Lists",
             array: this.state.live_list,
-            url: "all-live",
             type: "live_list"
           },
           {
             title: "Ecommerce Lists",
             array: this.state.ecom_list,
-            url: "all-ecom",
             type: "ecom_list"
           },
           {
             title: "Ecommerce Live Lists",
             array: this.state.ecom_live_list,
-            url: "all-ecom-live",
             type: "ecom_live_list"
           }
         ];
@@ -115,11 +110,9 @@ class AllLists extends Component {
                     </Grid>
                     <Grid item xs={12} md={6} className="list-date">
                       {el.createdAt
-                        ? `${new Date(el.createdAt).getMonth()}/${new Date(
+                        ? `${new Date(el.createdAt).getMonth() + 1}/${new Date(
                             el.createdAt
-                          ).getDate() + 1}/${new Date(
-                            el.createdAt
-                          ).getFullYear()}`
+                          ).getDate()}/${new Date(el.createdAt).getFullYear()}`
                         : "Date not found"}
                     </Grid>
                   </Grid>
@@ -129,7 +122,7 @@ class AllLists extends Component {
             {arr.array.length === 0 ? null : (
               <Link
                 className="link-btn"
-                to={`/lists/${arr.url}`}
+                to={`/lists/${arr.type}s`}
                 onMouseOver={() => this.handleMO(arr.type)}
               >
                 view all {arr.title}
