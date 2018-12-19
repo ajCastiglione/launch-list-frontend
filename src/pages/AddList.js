@@ -59,12 +59,15 @@ class AddList extends Component {
     this.setState({ warning: false, success: false, failure: false });
 
   handleChange = e => {
-    this.setState({
-      [e.target.name]: e.target.value,
-      warning: false,
-      success: false,
-      failure: false
-    });
+    this.setState(
+      {
+        [e.target.name]: e.target.value,
+        warning: false,
+        success: false,
+        failure: false
+      },
+      () => (sessionStorage.listType = this.state.listType)
+    );
   };
 
   handleSubmit = e => {
@@ -112,7 +115,7 @@ class AddList extends Component {
     return (
       <React.Fragment>
         <article className="add-list-article">
-          <h1 className="add-list-title">Generate new list</h1>
+          <h1 className="article-title">Generate new list</h1>
           <section className="section-container add-list large-wrapper">
             <form className="add-list-form" action="">
               {this.state.warning ? (
@@ -174,7 +177,7 @@ class AddList extends Component {
 
                   <React.Fragment>
                     <h2 className="add-list-subtitle">
-                      {this.state.listType === "todo-list"
+                      {this.state.listType === "todo_list"
                         ? "List Name: "
                         : "Website Name: "}
                       {this.state.listName}
