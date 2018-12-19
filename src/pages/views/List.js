@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import MySnackBar from "./../../displayMessages/MySnackBar";
 
 // UI Lib
@@ -30,6 +31,9 @@ class List extends Component {
     list: {},
     items_complete: 0,
     gotList: false,
+    listType: this.props.listType
+      ? this.props.listType
+      : sessionStorage.listType,
     progress: "0%",
     newText: "",
     showEditor: false,
@@ -135,10 +139,17 @@ class List extends Component {
           : new Error("Could not add new list item.")
       )
       .then(res => {
-        console.log(res);
         this.setState({ list: res }, () => this.countCompleted());
       })
       .catch(e => console.error(e));
+  };
+
+  // Displaying "pretty" list type name
+  prettifyName = () => {
+    let { listType } = this.state;
+    let name = listType.split("_");
+    name = `${name[0]} ${name[1]}`;
+    return `${name}s`;
   };
 
   render() {
@@ -200,7 +211,7 @@ class List extends Component {
       <div className="spinner" />
     );
 
-    const addToList = (
+    const addToList = gotList ? (
       <React.Fragment>
         <h1 className="add-item-title">New Task: {this.state.newText}</h1>
         <div className="new-item-input-container">
@@ -220,15 +231,19 @@ class List extends Component {
             className={`${classes.button} input-btn`}
             onClick={this.setNewItem}
           >
-            Primary
+            Add Item
           </Button>
         </div>
       </React.Fragment>
-    );
+    ) : null;
 
     return (
       <article className="single-list-view">
         <section className="section-container wrap">
+          <Link to={`/lists/${this.state.listType}s`} className="return-btn">
+            <i className="fas fa-caret-left" />
+            Return to {this.prettifyName()}
+          </Link>
           {listContent}
           {this.state.showEditor ? addToList : null}
         </section>
