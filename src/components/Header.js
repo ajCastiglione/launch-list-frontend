@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import logo from "./../logo.png";
+import Nav from "./Nav";
+// UI Lib
 import { withStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -56,6 +58,9 @@ class Header extends Component {
             {btnText}
           </Button>
         </Toolbar>
+        <nav className="nav">
+          <Nav signOut={this.props.signOut} />
+        </nav>
       </AppBar>
     );
   }
