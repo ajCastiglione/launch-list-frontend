@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import MySnackBar from "./../../displayMessages/MySnackBar";
 
 // UI Lib
 import { withStyles } from "@material-ui/core/styles";
@@ -6,6 +7,8 @@ import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 const styles = theme => ({
   fab: {
@@ -29,7 +32,8 @@ class List extends Component {
     gotList: false,
     progress: "0%",
     newText: "",
-    showEditor: false
+    showEditor: false,
+    listCompleteMsg: "This list is complete!"
   };
 
   componentDidMount() {
@@ -66,9 +70,7 @@ class List extends Component {
     let selectedItem = items.find(item => item._id === id);
     let updatedItem = (selectedItem.completed = checked);
     temp.items.map(el => (el._id === selectedItem ? (el = updatedItem) : null));
-    this.setState({ list: temp, items_complete: 0 }, () =>
-      this.countCompleted()
-    );
+    this.setState({ list: temp, items_complete: 0 }, () => this.sendNewList());
   };
 
   countCompleted = () => {
@@ -84,13 +86,24 @@ class List extends Component {
 
   progressPercentage = () => {
     let { items_complete, list } = this.state;
+    if (list.items.length === 0) return this.setState({ progress: "0%" });
     let percent = (items_complete / list.items.length) * 100;
     percent = Math.round(percent);
+
     return this.setState({ progress: `${percent}%` });
   };
 
   // Updating newly added items
   toggleEditor = () => this.setState({ showEditor: !this.state.showEditor });
+
+  removeItem = id => {
+    let { list } = this.state;
+    let items = list.items;
+    let newItems = items.filter(item => item._id !== id);
+    let temp = list;
+    temp.items = newItems;
+    this.setState({ list: temp }, () => this.sendNewList());
+  };
 
   handleChange = e => {
     this.setState({ [e.target.name]: e.target.value });
@@ -122,7 +135,8 @@ class List extends Component {
           : new Error("Could not add new list item.")
       )
       .then(res => {
-        this.setState({ list: res }, () => this.progressPercentage());
+        console.log(res);
+        this.setState({ list: res }, () => this.countCompleted());
       })
       .catch(e => console.error(e));
   };
@@ -132,6 +146,13 @@ class List extends Component {
     const { list, gotList } = this.state;
     const listContent = gotList ? (
       <div className="list">
+        {this.state.list.completed ? (
+          <MySnackBar
+            variant="success"
+            className="success-alert"
+            message={this.state.listCompleteMsg}
+          />
+        ) : null}
         <div id="progress-bar">
           <h1 className="single-list-title">{list.listName}</h1>
           <h3>{this.state.progress}</h3>
@@ -154,6 +175,13 @@ class List extends Component {
                   defaultChecked={clItem.completed}
                 />
                 <span className="checkmark" />
+                <IconButton
+                  aria-label="Delete"
+                  className="delete-item"
+                  onClick={() => this.removeItem(clItem._id)}
+                >
+                  <DeleteIcon />
+                </IconButton>
               </label>
             </React.Fragment>
           ))}
@@ -173,24 +201,29 @@ class List extends Component {
     );
 
     const addToList = (
-      <div className="new-item-input-container">
-        <TextField
-          id="new-item-text"
-          label="New List Item"
-          value={this.state.newText}
-          onChange={this.handleChange}
-          className={`${classes.textField} input-txt`}
-          margin="normal"
-          name="newText"
-        />
-        <Button
-          variant="outlined"
-          className={`${classes.button} input-btn`}
-          onClick={this.setNewItem}
-        >
-          Primary
-        </Button>
-      </div>
+      <React.Fragment>
+        <h1 className="add-item-title">New Task: {this.state.newText}</h1>
+        <div className="new-item-input-container">
+          <TextField
+            id="new-item-text"
+            label="New List Item"
+            value={this.state.newText}
+            onChange={this.handleChange}
+            className={`${classes.textField} input-txt`}
+            margin="normal"
+            name="newText"
+            autoComplete="off"
+          />
+          <Button
+            variant="outlined"
+            color="primary"
+            className={`${classes.button} input-btn`}
+            onClick={this.setNewItem}
+          >
+            Primary
+          </Button>
+        </div>
+      </React.Fragment>
     );
 
     return (
