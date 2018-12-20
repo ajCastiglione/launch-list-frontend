@@ -42,10 +42,7 @@ const styles = theme => ({
 
 class Nav extends Component {
   state = {
-    top: false,
     left: false,
-    bottom: false,
-    right: false,
     open: false
   };
 
@@ -68,6 +65,10 @@ class Nav extends Component {
     this.handleClick();
   };
 
+  topItemClicked = (side, open) => () => {
+    this.toggleDrawer(side, open);
+  };
+
   render() {
     const { classes } = this.props;
     const sideList = (
@@ -78,12 +79,12 @@ class Nav extends Component {
           className={`${classes.root} nav-root`}
         >
           <ListItem button className="nav-item">
-            <Link to="/" onClick={this.navItemClicked("left", false)}>
+            <Link to="/" onClick={this.topItemClicked("left", false)}>
               Home
             </Link>
           </ListItem>
           <ListItem button className="nav-item">
-            <Link to="/profile" onClick={this.navItemClicked("left", false)}>
+            <Link to="/profile" onClick={this.topItemClicked("left", false)}>
               Profile
             </Link>
           </ListItem>
