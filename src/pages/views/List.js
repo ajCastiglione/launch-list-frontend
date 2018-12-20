@@ -126,7 +126,7 @@ class List extends Component {
     let { list } = this.state;
     let newItems = list.items;
     fetch(`//localhost:5000/list/${this.state.id}`, {
-      method: "POST",
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
         "x-auth": sessionStorage.token
@@ -152,6 +152,15 @@ class List extends Component {
     return `${name}s`;
   };
 
+  // List name modification based on type
+  handleListName = () => {
+    let { list, listType } = this.state;
+    let lName = list.listName;
+    if (listType === "todo_list") return lName;
+    let typeName = this.prettifyName();
+    return `${lName} - ${typeName}`;
+  };
+
   render() {
     const { classes } = this.props;
     const { list, gotList } = this.state;
@@ -165,7 +174,7 @@ class List extends Component {
           />
         ) : null}
         <div id="progress-bar">
-          <h1 className="single-list-title">{list.listName}</h1>
+          <h1 className="single-list-title">{this.handleListName()}</h1>
           <h3>{this.state.progress}</h3>
         </div>
         <div className="list-items">
