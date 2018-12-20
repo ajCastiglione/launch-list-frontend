@@ -142,8 +142,9 @@ class AllLists extends Component {
 
     return (
       <React.Fragment>
-        <article className="all-lists-article large-wrapper">
-          <section className="section-container all-lists-section">
+        <article className="all-lists-article">
+          <h1 className="article-title">All Checklists</h1>
+          <section className="section-container all-lists-section large-wrapper">
             {allListTypes}
           </section>
         </article>
