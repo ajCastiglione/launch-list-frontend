@@ -13,25 +13,6 @@ $fadedRed: rgba(201, 129, 114, 0.42);
 $font: "Nunito Sans", sans-serif;
 
 // Gradients
-$RedToLightRed: linear-gradient(
-  to right,
-  rgba(127, 49, 29, 1) 0%,
-  rgba(161, 106, 93, 1) 64%,
-  rgba(255, 156, 134, 1) 100%
-);
+$gradient: linear-gradient(to right, #3f85bf, #2ebf91);
 
-$RedToLightRedDown: linear-gradient(
-  to bottom,
-  rgba(127, 49, 29, 1) 0%,
-  rgba(201, 129, 114, 0.52) 77%,
-  rgba(255, 156, 134, 0.38) 100%
-);
-
-$BrowntoOrange: linear-gradient(
-  to right,
-  rgba(127, 74, 38, 1) 0%,
-  rgba(255, 102, 0, 1) 64%,
-  rgba(255, 148, 76, 1) 100%
-);
-
-$newGrad: linear-gradient(to right, #283c86, #45a247);
+$gradient2: linear-gradient(to left, #3f85bf, #2ebf91);
