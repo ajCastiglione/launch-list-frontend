@@ -81,6 +81,7 @@ Header Section
     border-bottom: 2px solid $lightgreen;
   }
   .signout-btn {
+    margin-top: 1rem !important;
     display: block;
     margin: auto;
   }
@@ -159,6 +160,22 @@ Body Section
 .home-article {
   .article-title {
     background-image: url("https://s3.amazonaws.com/minervalists/Home_bg.jpg");
+  }
+  .grid-container {
+    margin: 1rem 0;
+    justify-content: center;
+    align-items: stretch;
+    max-width: 100%;
+    text-align: center;
+  }
+  .section-container {
+    padding: 2rem 10px;
+  }
+  .btn-container {
+    padding: 0;
+  }
+  .btn {
+    padding: 8px 16px;
   }
 }
 
