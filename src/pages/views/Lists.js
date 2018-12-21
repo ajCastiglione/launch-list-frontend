@@ -81,6 +81,17 @@ class Lists extends Component {
 
   handleClose = () => this.setState({ open: false });
 
+  prettifyName = () => {
+    let { listType } = this.state;
+    let name = listType.split("_");
+    if (listType === "ecom_live_list") {
+      name = `${name[0]} ${name[1]} ${name[2]}`;
+      return `${name}s`;
+    }
+    name = `${name[0]} ${name[1]}`;
+    return `${name}s`;
+  };
+
   handleSearch = e => {
     let { value } = e.target;
     let { lists } = this.state;
@@ -280,7 +291,8 @@ class Lists extends Component {
     );
 
     return (
-      <React.Fragment>
+      <div className="all-lists-type">
+        <h1 className="article-title">All {this.prettifyName(listType)}</h1>
         {searchBar}
         <article className={`list-table ${listType}`}>
           <section className="section-container">
@@ -304,7 +316,7 @@ class Lists extends Component {
             </Paper>
           </section>
         </article>
-      </React.Fragment>
+      </div>
     );
   }
 }

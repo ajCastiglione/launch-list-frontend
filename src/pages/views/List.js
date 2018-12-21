@@ -119,7 +119,7 @@ class List extends Component {
     let itemObj = { text: item, completed: false };
     let temp = list;
     temp.items.push(itemObj);
-    this.setState({ list: temp }, () => this.sendNewList());
+    this.setState({ list: temp, newText: "" }, () => this.sendNewList());
   };
 
   sendNewList = () => {
