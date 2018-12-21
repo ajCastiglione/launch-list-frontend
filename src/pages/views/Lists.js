@@ -214,7 +214,7 @@ class Lists extends Component {
           onChange={this.handleSearch}
           autoComplete="off"
         />
-        <Link to="/all-lists" className="return-btn">
+        <Link to="/" className="return-btn">
           <i className="fas fa-caret-left" />
           Return to all lists
         </Link>
