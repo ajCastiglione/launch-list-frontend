@@ -13,7 +13,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import Collapse from "@material-ui/core/Collapse";
-import Divider from "@material-ui/core/Divider";
+
 // Icons
 import ViewList from "@material-ui/icons/ViewList";
 import Menu from "@material-ui/icons/Menu";
@@ -99,10 +99,7 @@ class Nav extends Component {
           <Collapse in={this.state.open} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
               <ListItem button className={`${classes.nested} nav-item`}>
-                <Link
-                  to="/all-lists"
-                  onClick={this.navItemClicked("left", false)}
-                >
+                <Link to="/" onClick={this.navItemClicked("left", false)}>
                   All Lists
                 </Link>
               </ListItem>
@@ -116,8 +113,6 @@ class Nav extends Component {
               </ListItem>
             </List>
           </Collapse>
-
-          <Divider className={classes.hr} />
 
           <ListItem className="nav-item">
             <Button
