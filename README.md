@@ -128,8 +128,8 @@ This app will have 5 set lists to choose from.
 ## App
 
 <ol>
-<li>Add navigation</li>
-<li>Change color scheme, not liking the red combo anymore</li>
+<li><del>Add navigation</del></li>
+<li><del>Change color scheme, not liking the red combo anymore</del></li>
 <li>/all-lists - Figure out better layout for all lists page. Ugly</li>
 <li>/ - Display list types and total counts on home page on right side, will figure out main content</li>
 <li><del>/lists/:type - Add functionality to delete btn</del></li>
@@ -137,22 +137,23 @@ This app will have 5 set lists to choose from.
 <li><del>/list/:id - Create page that displays the selected list. Add CRUD abilities here</del></li>
 <li><del>/lists/:type - fix search feature. Clearing all input with crtl+bksp messes up display results</del></li>
 <li><del>/add-list - figure out why when linking directly to the new list it doesn't carry the necessary information to display the list</del></li>
+<li>Refactor app and put all requests into single file once all functionality is built out</li>
 </ol>
 
 ## Lists
 
 <ol>
-<li>Figure out routing for viewing single lists - will be using ID in url to view specific list</li>
-<li>Add routing for viewing all lists</li>
-<li>Ensure updating list items works as intended</li>
-<li>Will work on CRUD abilities for lists once the routes are in place and have all necessary information</li>
-<li>Add ability to delete items</li>
-<li>Fix percentage calc</li>
+<li><del>Figure out routing for viewing single lists - will be using ID in url to view specific list</del></li>
+<li><del>Add routing for viewing all lists</del></li>
+<li><del>Ensure updating list items works as intended</del></li>
+<li><del>Will work on CRUD abilities for lists once the routes are in place and have all necessary information</del></li>
+<li><del>Add ability to delete items</del></li>
+<li><del>Fix percentage calc</del></li>
 <li>Handle errors: cant access list, cant find list, no list id in url</li>
 <li>Create comment section. Figure out how to make it a wsywig like editor (maybe - maybe not)</li>
-<li>Create modal that asks for second confirmation, then move on to delete function, delete function will save removed list, a display will ask if they want to restore the removed list.</li>
-<li>For todos - display name. For others: display name - ${type of list}</li>
-<li>/add-list - Set sessions token for list type on AddList route</li>
+<li><del>Create modal that asks for second confirmation, then move on to delete function, delete function will save removed list, a display will ask if they want to restore the removed list.</del></li>
+<li><del>For todos - display name. For others: display name - ${type of list}</del></li>
+<li><del>/add-list - Set sessions token for list type on AddList route</del></li>
 
 </ol>
 
