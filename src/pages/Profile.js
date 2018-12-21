@@ -147,6 +147,7 @@ class Profile extends Component {
           failure: false,
           warning: false,
           success: true,
+          password: "",
           successMsg: "Successfully Updated User Profile!"
         });
       })
