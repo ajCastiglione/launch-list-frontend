@@ -41,6 +41,7 @@ class Login extends Component {
   }
 
   handleChange = e => {
+    if (e.which === 13) return this.submitLogin();
     this.setState({ [e.target.name]: e.target.value, warning: false });
   };
 
@@ -109,6 +110,7 @@ class Login extends Component {
             }}
             required={true}
             onChange={this.handleChange}
+            onKeyPress={this.handleChange}
             value={this.state.pw}
           />
           <Button
