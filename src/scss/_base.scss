@@ -6,6 +6,10 @@ Global Section
   padding: 0;
 }
 
+article {
+  min-height: 80vh;
+}
+
 body {
   font-family: $font;
   font-weight: 400;
@@ -317,6 +321,12 @@ Body Section
 }
 
 // Single Type View
+.all-lists-type {
+  .article-title {
+    background-image: url("https://s3.amazonaws.com/minervalists/all-lists-skyline.jpg");
+  }
+}
+
 .search-bar-container {
   input {
     width: 100%;
@@ -334,6 +344,10 @@ Body Section
   .warning > div {
     margin: 10px auto 0;
   }
+}
+
+.list-table {
+  min-height: 30vh;
 }
 
 .return-btn {
@@ -537,9 +551,10 @@ Animations
 }
 
 .spinner {
-  display: inline-block;
+  display: block;
+  margin: auto;
   border: 4px solid rgba(0, 0, 0, 0.1);
-  border-left-color: $red;
+  border-left-color: $lightblue;
   border-radius: 50%;
   width: 60px;
   height: 60px;
