@@ -165,4 +165,6 @@ This app will have 5 set lists to choose from.
 <li>Ability to view all users</li>
 <li>CRUD abilities panel for superadmin</li>
 <li>Update User schema on server to include username space and other customizable poritions as needed</li>
+<li>Add ability to update password</li>
+<li>Let users select which type of lists they want, whether it be for websites or something else. Will need to keep the same flow as existing style otherwise i'll have to redevelop a shit load</li>
 </ol>
