@@ -78,9 +78,7 @@ class AllLists extends Component {
       .catch(e => console.error(e));
   };
 
-  handleMO = type => {
-    this.props.updateListType(type);
-  };
+  handleMO = type => this.props.updateListType(type);
 
   render() {
     const allListTypes = this.state.listsAcquired ? (
