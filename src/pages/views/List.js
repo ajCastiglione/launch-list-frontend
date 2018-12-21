@@ -36,8 +36,7 @@ class List extends Component {
       : sessionStorage.listType,
     progress: "0%",
     newText: "",
-    showEditor: false,
-    listCompleteMsg: "This list is complete!"
+    showEditor: false
   };
 
   componentDidMount() {
@@ -110,6 +109,7 @@ class List extends Component {
   };
 
   handleChange = e => {
+    if (e.which === 13) return this.setNewItem();
     this.setState({ [e.target.name]: e.target.value });
   };
 
@@ -166,11 +166,16 @@ class List extends Component {
     const { list, gotList } = this.state;
     const listContent = gotList ? (
       <div className="list">
-        {this.state.list.completed ? (
+        {list.completed ? (
           <MySnackBar
             variant="success"
             className="success-alert"
-            message={this.state.listCompleteMsg}
+            message={`Completed at: ${new Date(
+              list.completedAt
+            ).toLocaleTimeString()} - ${new Date(list.completedAt).getMonth() +
+              1}/${new Date(list.completedAt).getDate()}/${new Date(
+              list.completedAt
+            ).getFullYear()}`}
           />
         ) : null}
         <div id="progress-bar">
@@ -229,6 +234,7 @@ class List extends Component {
             label="New List Item"
             value={this.state.newText}
             onChange={this.handleChange}
+            onKeyPress={this.handleChange}
             className={`${classes.textField} input-txt`}
             margin="normal"
             name="newText"
