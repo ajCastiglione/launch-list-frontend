@@ -14,12 +14,16 @@ import AddList from "./pages/AddList";
 import Lists from "./pages/views/Lists";
 import List from "./pages/views/List";
 
+// User pages
+import Profile from "./pages/Profile";
+
 // Config
 import "./config/config";
 
 class App extends Component {
   state = {
     loggedIn: true,
+    role: "",
     authToken: "",
     resMsg: "",
     listType: ""
@@ -55,10 +59,13 @@ class App extends Component {
         }
       })
       .then(response => {
-        this.setState({ loggedIn: true, authToken: response.code }, () => {
-          sessionStorage.token = response.code;
-          window.location.href = "/";
-        });
+        this.setState(
+          { loggedIn: true, authToken: response.code, role: response.role },
+          () => {
+            sessionStorage.token = response.code;
+            window.location.href = "/";
+          }
+        );
       })
       .catch(e => this.setState({ resMsg: "Authentication failed!" }));
   };
@@ -137,6 +144,13 @@ class App extends Component {
         <Route
           path="/list"
           render={() => <List listType={this.state.listType} />}
+        />
+
+        {/* User routes */}
+
+        <Route
+          path="/profile"
+          render={() => <Profile role={this.state.role} />}
         />
 
         {this.state.loggedIn ? <Footer /> : null}
