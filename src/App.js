@@ -119,7 +119,10 @@ class App extends Component {
           )}
         />
 
-        <Route path="/add-list" component={AddList} />
+        <Route
+          path="/add-list"
+          render={() => <AddList updateListType={this.updateListType} />}
+        />
 
         {/* <Route
           path="/all-lists"
