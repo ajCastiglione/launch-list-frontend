@@ -10,7 +10,7 @@ import Login from "./components/Login";
 // Pages
 import Home from "./pages/Home";
 import AddList from "./pages/AddList";
-import AllLists from "./pages/AllLists";
+// import AllLists from "./pages/AllLists";
 import Lists from "./pages/views/Lists";
 import List from "./pages/views/List";
 
@@ -103,7 +103,11 @@ class App extends Component {
           path="/"
           exact
           render={() => (
-            <Home loggedIn={this.state.loggedIn} signOut={this.signOut} />
+            <Home
+              loggedIn={this.state.loggedIn}
+              signOut={this.signOut}
+              updateListType={this.updateListType}
+            />
           )}
         />
 
@@ -117,10 +121,10 @@ class App extends Component {
 
         <Route path="/add-list" component={AddList} />
 
-        <Route
+        {/* <Route
           path="/all-lists"
           render={() => <AllLists updateListType={this.updateListType} />}
-        />
+        /> */}
 
         <Route
           path="/lists/:listType"
