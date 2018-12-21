@@ -134,7 +134,7 @@ class Home extends Component {
                 </Typography>
                 <Typography component="div">
                   <p>
-                    Number of {lists.title}: {lists.array.length}
+                    # of {lists.title}: {lists.array.length}
                   </p>
                   <p>Completed: {this.countCompleted(lists.array)}</p>
                 </Typography>
