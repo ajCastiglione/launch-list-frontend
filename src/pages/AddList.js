@@ -66,7 +66,10 @@ class AddList extends Component {
         success: false,
         failure: false
       },
-      () => (sessionStorage.listType = this.state.listType)
+      () => {
+        sessionStorage.listType = this.state.listType;
+        this.props.updateListType(this.state.listType);
+      }
     );
   };
 
