@@ -32,6 +32,10 @@ a {
   margin: auto;
 }
 
+.text-center {
+  text-align: center;
+}
+
 /**
 Header Section
 */
@@ -513,6 +517,37 @@ Body Section
 .new-item-input-container {
   display: flex;
   align-items: flex-end;
+}
+
+/**
+User Section
+*/
+
+.profile-section {
+  margin-top: 2rem;
+}
+
+.profile-editor {
+  display: flex;
+  flex-direction: column;
+}
+.grid-container {
+  max-width: 100% !important;
+  margin-top: 0 !important;
+  align-items: stretch;
+}
+.grid-item:nth-child(1) > div:not(.spinner) {
+  height: 100%;
+}
+.text-fields {
+  width: 100%;
+  input {
+    max-width: 100%;
+  }
+}
+
+.vis-icon {
+  cursor: pointer;
 }
 
 /**
