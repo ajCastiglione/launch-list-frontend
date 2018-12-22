@@ -1,8 +1,11 @@
-# Minerva Todo list - Launch list - Ecom list - Live list - Ecom live list
+# Todo list - Launch list - Ecom list - Live list - Ecom live list
 
 This app will have 5 set lists to choose from.
 
 <hr>
+
+<h2>Todo List</h2>
+<p>This is a choose your own adventure type list. You can add fields to all of the lists but this will just have 1 place holder.</p>
 
 <h2>Launch Checklist</h2>
 <p>The launch checklist will contain the bulk:</p>
