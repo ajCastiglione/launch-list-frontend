@@ -18,9 +18,6 @@ import Profile from "./pages/Profile";
 import Users from "./pages/views/Users";
 import AddUser from "./pages/AddUser";
 
-// Config
-import "./config/config";
-
 class App extends Component {
   state = {
     loggedIn: true,
