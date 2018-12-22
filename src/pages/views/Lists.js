@@ -95,9 +95,10 @@ class Lists extends Component {
   handleSearch = e => {
     let { value } = e.target;
     let { lists } = this.state;
+    let regex = new RegExp(value, "i");
     let temp = [];
     lists.map(list => {
-      if (list.listName.includes(value) && value) {
+      if (list.listName.match(regex) && value) {
         temp.push(list);
         return this.setState({ searchResults: temp, noMatch: false });
       } else if (temp.length === 0 && value) {
@@ -242,8 +243,8 @@ class Lists extends Component {
     );
     const modal = (
       <Modal
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
+        aria-labelledby="delete-modal-title"
+        aria-describedby="delete-modal-description"
         open={this.state.open}
         onClose={this.handleClose}
       >
