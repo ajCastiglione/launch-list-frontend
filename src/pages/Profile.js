@@ -52,6 +52,10 @@ const styles = theme => ({
   menu: {
     width: 200
   },
+  button: {
+    margin: theme.spacing.unit,
+    fontWeight: "bold"
+  },
   margin: {
     margin: "auto",
     marginTop: "1rem"
@@ -77,10 +81,10 @@ class Profile extends Component {
 
   componentDidMount() {
     if (this.props.role) this.setState({ role: this.props.role });
-    else this.fetchUserRole();
+    else this.fetchUserProfile();
   }
 
-  fetchUserRole = () => {
+  fetchUserProfile = () => {
     fetch("//localhost:5000/users/me", {
       headers: { "x-auth": sessionStorage.token }
     })
@@ -313,7 +317,7 @@ class Profile extends Component {
           className={classes.button}
           onClick={this.submitProfile}
         >
-          Submit
+          Save Changes
         </Button>
       </form>
     );

@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
+
 // Display messages
 import MySnackBar from "./../displayMessages/MySnackBar";
+
 // UI Lib
 import { withStyles } from "@material-ui/core/styles";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
