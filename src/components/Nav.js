@@ -13,6 +13,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import Collapse from "@material-ui/core/Collapse";
+import Divider from "@material-ui/core/Divider";
 
 // Icons
 import ViewList from "@material-ui/icons/ViewList";
@@ -43,7 +44,25 @@ const styles = theme => ({
 class Nav extends Component {
   state = {
     left: false,
-    open: false
+    open: false,
+    role: ""
+  };
+
+  componentDidMount() {
+    this.fetchUserRole();
+  }
+
+  fetchUserRole = () => {
+    fetch("//localhost:5000/users/me", {
+      headers: { "x-auth": sessionStorage.token }
+    })
+      .then(res =>
+        res.status === 200 ? res.json() : new Error("Invalid Token")
+      )
+      .then(res => {
+        this.setState({ role: res.user.role });
+      })
+      .catch(e => console.log(e));
   };
 
   toggleDrawer = (side, open) => {
@@ -88,32 +107,49 @@ class Nav extends Component {
               Profile
             </Link>
           </ListItem>
-
-          <ListItem button onClick={this.handleClick}>
-            <ListItemIcon>
-              <ViewList />
-            </ListItemIcon>
-            <ListItemText primary="List Actions" />
-            {this.state.open ? <ExpandLess /> : <ExpandMore />}
+          <ListItem button className="nav-item">
+            <Link to="/" onClick={this.topItemClicked("left", false)}>
+              All Lists
+            </Link>
           </ListItem>
-          <Collapse in={this.state.open} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-              <ListItem button className={`${classes.nested} nav-item`}>
-                <Link to="/" onClick={this.navItemClicked("left", false)}>
-                  All Lists
-                </Link>
-              </ListItem>
-              <ListItem button className={`${classes.nested} nav-item`}>
-                <Link
-                  to="/add-list"
-                  onClick={this.navItemClicked("left", false)}
-                >
-                  Add List
-                </Link>
-              </ListItem>
-            </List>
-          </Collapse>
+          <ListItem button className="nav-item">
+            <Link to="/add-list" onClick={this.topItemClicked("left", false)}>
+              Add List
+            </Link>
+          </ListItem>
 
+          <Divider />
+          {this.state.role === "admin" ? (
+            <React.Fragment>
+              <ListItem button onClick={this.handleClick}>
+                <ListItemIcon>
+                  <ViewList />
+                </ListItemIcon>
+                <ListItemText primary="User Actions" />
+                {this.state.open ? <ExpandLess /> : <ExpandMore />}
+              </ListItem>
+              <Collapse in={this.state.open} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                  <ListItem button className={`${classes.nested} nav-item`}>
+                    <Link
+                      to="/users"
+                      onClick={this.navItemClicked("left", false)}
+                    >
+                      All Users
+                    </Link>
+                  </ListItem>
+                  <ListItem button className={`${classes.nested} nav-item`}>
+                    <Link
+                      to="/user/add"
+                      onClick={this.navItemClicked("left", false)}
+                    >
+                      Add User
+                    </Link>
+                  </ListItem>
+                </List>
+              </Collapse>
+            </React.Fragment>
+          ) : null}
           <ListItem className="nav-item">
             <Button
               variant="contained"
