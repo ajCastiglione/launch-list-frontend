@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import MySnackBar from "./../../displayMessages/MySnackBar";
 
 // UI Lib
@@ -50,7 +50,11 @@ class Users extends Component {
   };
 
   componentDidMount() {
-    this.fetchUsers();
+    this.props
+      .checkAuth()
+      .then(role =>
+        role === "admin" ? this.fetchUsers() : <Redirect to="/" />
+      );
   }
 
   fetchUsers = () => {

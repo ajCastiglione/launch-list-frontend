@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 import ReactDOM from "react-dom";
 import MySnackBar from "./../displayMessages/MySnackBar";
 import validator from "validator";
@@ -83,6 +84,12 @@ class AddUser extends Component {
   };
 
   componentDidMount() {
+    this.props
+      .checkAuth()
+      .then(role =>
+        role === "admin" ? this.fetchUsers() : <Redirect to="/" />
+      );
+
     this.setState({
       labelWidth: ReactDOM.findDOMNode(this.InputLabelRef).offsetWidth
     });
