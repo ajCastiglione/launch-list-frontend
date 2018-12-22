@@ -350,7 +350,8 @@ Body Section
   }
 }
 
-.list-table {
+.list-table,
+.users-table {
   min-height: 30vh;
 }
 
@@ -376,7 +377,8 @@ Body Section
   }
 }
 
-.list-table {
+.list-table,
+.users-table {
   margin-bottom: 2rem;
   .section-container {
     padding: 1rem 2rem;
@@ -548,6 +550,13 @@ User Section
 
 .vis-icon {
   cursor: pointer;
+}
+
+// Add user
+.add-user-article {
+  .article-title {
+    background-image: url("https://s3.amazonaws.com/minervalists/add-user-bg.jpeg");
+  }
 }
 
 /**
