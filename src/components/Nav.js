@@ -140,7 +140,7 @@ class Nav extends Component {
                   </ListItem>
                   <ListItem button className={`${classes.nested} nav-item`}>
                     <Link
-                      to="/user/add"
+                      to="/users/add"
                       onClick={this.navItemClicked("left", false)}
                     >
                       Add User
