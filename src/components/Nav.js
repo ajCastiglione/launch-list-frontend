@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import url from "./../config/config";
 
 // UI Lib
 import { withStyles } from "@material-ui/core/styles";
@@ -53,14 +54,14 @@ class Nav extends Component {
   }
 
   fetchUserRole = () => {
-    fetch("//localhost:5000/users/me", {
+    fetch(`//${url}/users/me`, {
       headers: { "x-auth": sessionStorage.token }
     })
       .then(res =>
         res.status === 200 ? res.json() : new Error("Invalid Token")
       )
       .then(res => {
-        this.setState({ role: res.user.role });
+        if (res.user) this.setState({ role: res.user.role });
       })
       .catch(e => console.log(e));
   };

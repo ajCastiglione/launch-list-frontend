@@ -18,6 +18,9 @@ import Profile from "./pages/Profile";
 import Users from "./pages/views/Users";
 import AddUser from "./pages/AddUser";
 
+// Config
+import url from "./config/config";
+
 class App extends Component {
   state = {
     loggedIn: true,
@@ -29,7 +32,9 @@ class App extends Component {
 
   componentDidMount() {
     this.checkForToken();
-    this.checkAuth();
+    if (this.state.loggedIn && this.state.authToken !== "") {
+      this.checkAuth();
+    }
   }
 
   checkForToken = () => {
@@ -44,7 +49,7 @@ class App extends Component {
 
   checkAuth = () => {
     return new Promise((resolve, reject) => {
-      fetch("//localhost:5000/users/me", {
+      fetch(`//${url}/users/me`, {
         headers: {
           "x-auth": sessionStorage.token
         }
@@ -64,7 +69,7 @@ class App extends Component {
   };
 
   signIn = (email, password) => {
-    fetch("//localhost:5000/users/login", {
+    fetch(`//${url}/users/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -93,7 +98,7 @@ class App extends Component {
 
   signOut = e => {
     e.preventDefault();
-    fetch("//localhost:5000/users/signout", {
+    fetch(`//${url}/users/signout`, {
       method: "DELETE",
       headers: {
         "x-auth": sessionStorage.token

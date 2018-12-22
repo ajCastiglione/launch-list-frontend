@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
+import url from "./../config/config";
 
 // Display messages
 import MySnackBar from "./../displayMessages/MySnackBar";
@@ -83,7 +84,7 @@ class AddList extends Component {
         warning: true,
         warningMsg: "Name of website and list type are required."
       });
-    fetch("//localhost:5000/lists", {
+    fetch(`//${url}/lists`, {
       method: "POST",
       headers: {
         "x-auth": sessionStorage.token,

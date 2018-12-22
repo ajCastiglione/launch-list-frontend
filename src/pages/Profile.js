@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import MySnackBar from "./../displayMessages/MySnackBar";
 import validator from "validator";
+import url from "./../config/config";
 
 // UI Lib
 import { withStyles } from "@material-ui/core/styles";
@@ -85,7 +86,7 @@ class Profile extends Component {
   }
 
   fetchUserProfile = () => {
-    fetch("//localhost:5000/users/me", {
+    fetch(`//${url}/users/me`, {
       headers: { "x-auth": sessionStorage.token }
     })
       .then(res =>
@@ -120,7 +121,7 @@ class Profile extends Component {
     if (!validator.isEmail(email)) {
       return this.setState({ warning: true, warningMsg: "Invalid email." });
     }
-    fetch("//localhost:5000/users/me", {
+    fetch(`//${url}/users/me`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

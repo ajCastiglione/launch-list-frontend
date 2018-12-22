@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import url from "./../config/config";
 
 // UI lib
 import { withStyles } from "@material-ui/core/styles";
@@ -41,7 +42,7 @@ class Home extends Component {
   }
 
   getLists = () => {
-    fetch("//localhost:5000/lists", {
+    fetch(`//${url}/lists`, {
       headers: {
         "x-auth": sessionStorage.token
       }

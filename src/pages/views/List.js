@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import MySnackBar from "./../../displayMessages/MySnackBar";
+import url from "./../../config/config";
 
 // UI Lib
 import { withStyles } from "@material-ui/core/styles";
@@ -46,7 +47,7 @@ class List extends Component {
   }
 
   fetchList = () => {
-    fetch(`//localhost:5000/list/${this.state.id}`, {
+    fetch(`//${url}/list/${this.state.id}`, {
       headers: {
         "x-auth": sessionStorage.token
       }
@@ -125,7 +126,7 @@ class List extends Component {
   sendNewList = () => {
     let { list } = this.state;
     let newItems = list.items;
-    fetch(`//localhost:5000/list/${this.state.id}`, {
+    fetch(`//${url}/list/${this.state.id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

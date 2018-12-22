@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Redirect, Link } from "react-router-dom";
 import MySnackBar from "./../../displayMessages/MySnackBar";
+import url from "./../../config/config";
 
 // UI Lib
 import { withStyles } from "@material-ui/core/styles";
@@ -61,7 +62,7 @@ class Users extends Component {
   }
 
   fetchUsers = () => {
-    fetch(`//localhost:5000/users`, {
+    fetch(`//${url}/users`, {
       headers: {
         "x-auth": sessionStorage.token
       }
@@ -124,7 +125,7 @@ class Users extends Component {
   deleteUser = () => {
     let { userToRemove } = this.state;
     let email = userToRemove;
-    fetch(`//localhost:5000/users/remove/${email}`, {
+    fetch(`//${url}/users/remove/${email}`, {
       method: "delete",
       headers: {
         "x-auth": sessionStorage.token

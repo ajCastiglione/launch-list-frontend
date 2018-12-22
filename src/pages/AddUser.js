@@ -3,6 +3,7 @@ import { Redirect } from "react-router-dom";
 import ReactDOM from "react-dom";
 import MySnackBar from "./../displayMessages/MySnackBar";
 import validator from "validator";
+import url from "./../config/config";
 
 // UI Lib
 import { withStyles } from "@material-ui/core/styles";
@@ -114,7 +115,7 @@ class AddUser extends Component {
         warningMsg: "Invalid email!",
         loading: false
       });
-    fetch("//localhost:5000/users/add", {
+    fetch(`//${url}/users/add`, {
       method: "POST",
       headers: {
         "x-auth": sessionStorage.token,

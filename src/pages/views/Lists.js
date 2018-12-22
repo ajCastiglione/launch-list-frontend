@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import MySnackBar from "./../../displayMessages/MySnackBar";
+import url from "./../../config/config";
 
 // UI Lib
 import { withStyles } from "@material-ui/core/styles";
@@ -58,7 +59,7 @@ class Lists extends Component {
 
   fetchLists = () => {
     let { listType } = this.state;
-    fetch(`//localhost:5000/lists/${listType}`, {
+    fetch(`//${url}/lists/${listType}`, {
       headers: {
         "x-auth": sessionStorage.token
       }
@@ -121,7 +122,7 @@ class Lists extends Component {
   deleteList = () => {
     let { listToRemove } = this.state;
     let id = listToRemove;
-    fetch(`//localhost:5000/lists/${id}`, {
+    fetch(`//${url}/lists/${id}`, {
       method: "delete",
       headers: {
         "x-auth": sessionStorage.token
@@ -144,7 +145,7 @@ class Lists extends Component {
 
   restoreList = () => {
     let { removedList, listType } = this.state;
-    fetch("//localhost:5000/lists", {
+    fetch(`//${url}/lists`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
