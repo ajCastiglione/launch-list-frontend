@@ -34,6 +34,9 @@ const styles = theme => ({
     left: 0,
     right: 0,
     margin: "auto"
+  },
+  margin: {
+    margin: "auto"
   }
 });
 
@@ -44,9 +47,9 @@ class Users extends Component {
     searchResults: [],
     defaultLists: [],
     userToRemove: null,
-    removedList: {},
-    lastWarning: false,
-    open: false
+    open: false,
+    failure: false,
+    msg: ""
   };
 
   componentDidMount() {
@@ -63,11 +66,10 @@ class Users extends Component {
         "x-auth": sessionStorage.token
       }
     })
-      .then(res =>
-        res.status === 200
-          ? res.json()
-          : new Error("Could not authenticate and acquire lists.")
-      )
+      .then(res => {
+        if (res.status === 200) return res.json();
+        else throw new Error("Could not retrive users");
+      })
       .then(res => {
         this.setState({
           users: res,
@@ -80,6 +82,7 @@ class Users extends Component {
   };
 
   handleClose = () => this.setState({ open: false });
+  closeModal = () => this.setState({ failure: false });
 
   prettifyName = () => {
     let { listType } = this.state;
@@ -127,9 +130,14 @@ class Users extends Component {
         "x-auth": sessionStorage.token
       }
     })
-      .then(res =>
-        res.status === 200 ? res.json() : new Error("Could not remove list.")
-      )
+      .then(res => {
+        if (res.status === 200) return res.json();
+        if (res.status === 409) {
+          return res
+            .json()
+            .then(error => this.setState({ failure: true, msg: error.err }));
+        }
+      })
       .then(res => {
         this.setState({ open: false });
         this.fetchUsers();
@@ -233,6 +241,14 @@ class Users extends Component {
         <article className="users-table">
           <section className="section-container">
             {modal}
+            {this.state.failure ? (
+              <MySnackBar
+                variant="error"
+                className={classes.margin}
+                message={this.state.msg}
+                onClick={this.closeModal}
+              />
+            ) : null}
             <Paper className={classes.root}>
               <Table className={classes.table}>
                 <TableHead>
