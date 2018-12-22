@@ -10,12 +10,13 @@ import Login from "./components/Login";
 // Pages
 import Home from "./pages/Home";
 import AddList from "./pages/AddList";
-// import AllLists from "./pages/AllLists";
 import Lists from "./pages/views/Lists";
 import List from "./pages/views/List";
 
 // User pages
 import Profile from "./pages/Profile";
+import Users from "./pages/views/Users";
+import AddUser from "./pages/AddUser";
 
 // Config
 import "./config/config";
@@ -23,7 +24,7 @@ import "./config/config";
 class App extends Component {
   state = {
     loggedIn: true,
-    role: "",
+    role: sessionStorage.role ? sessionStorage.role : "",
     authToken: "",
     resMsg: "",
     listType: ""
@@ -31,6 +32,7 @@ class App extends Component {
 
   componentDidMount() {
     this.checkForToken();
+    this.checkAuth();
   }
 
   checkForToken = () => {
@@ -41,6 +43,27 @@ class App extends Component {
       this.setState({ loggedIn: false });
       return false;
     }
+  };
+
+  checkAuth = () => {
+    return new Promise((resolve, reject) => {
+      fetch("//localhost:5000/users/me", {
+        headers: {
+          "x-auth": sessionStorage.token
+        }
+      })
+        .then(res =>
+          res.status === 200
+            ? res.json()
+            : new Error("Could not validate token")
+        )
+        .then(res => {
+          this.setState({ role: res.user.role });
+          sessionStorage.role = res.user.role;
+          resolve(res.user.role);
+        })
+        .catch(e => console.log(e));
+    });
   };
 
   signIn = (email, password) => {
@@ -63,6 +86,7 @@ class App extends Component {
           { loggedIn: true, authToken: response.code, role: response.role },
           () => {
             sessionStorage.token = response.code;
+            sessionStorage.role = response.role;
             window.location.href = "/";
           }
         );
@@ -131,11 +155,6 @@ class App extends Component {
           render={() => <AddList updateListType={this.updateListType} />}
         />
 
-        {/* <Route
-          path="/all-lists"
-          render={() => <AllLists updateListType={this.updateListType} />}
-        /> */}
-
         <Route
           path="/lists/:listType"
           render={() => <Lists listType={this.state.listType} />}
@@ -151,6 +170,29 @@ class App extends Component {
         <Route
           path="/profile"
           render={() => <Profile role={this.state.role} />}
+        />
+
+        <Route
+          exact
+          path="/users"
+          render={() =>
+            this.state.role === "admin" ? (
+              <Users checkAuth={this.checkAuth} />
+            ) : (
+              <Redirect to="/" />
+            )
+          }
+        />
+
+        <Route
+          path="/users/add"
+          render={() =>
+            this.state.role === "admin" ? (
+              <AddUser checkAuth={this.checkAuth} />
+            ) : (
+              <Redirect to="/" />
+            )
+          }
         />
 
         {this.state.loggedIn ? <Footer /> : null}
