@@ -86,9 +86,7 @@ class AddUser extends Component {
   componentDidMount() {
     this.props
       .checkAuth()
-      .then(role =>
-        role === "admin" ? this.fetchUsers() : <Redirect to="/" />
-      );
+      .then(role => (role === "admin" ? "" : <Redirect to="/" />));
 
     this.setState({
       labelWidth: ReactDOM.findDOMNode(this.InputLabelRef).offsetWidth
