@@ -23,7 +23,7 @@ import url from "./config/config";
 
 class App extends Component {
   state = {
-    loggedIn: true,
+    loggedIn: sessionStorage.token ? true : false,
     role: sessionStorage.role ? sessionStorage.role : "",
     authToken: "",
     resMsg: "",
@@ -32,7 +32,7 @@ class App extends Component {
 
   componentDidMount() {
     this.checkForToken();
-    if (this.state.loggedIn && this.state.authToken !== "") {
+    if (this.state.authToken !== "") {
       this.checkAuth();
     }
   }
@@ -126,7 +126,11 @@ class App extends Component {
   render() {
     return (
       <main className="App main">
-        {this.state.loggedIn ? null : <Redirect to="/login" />}
+        {this.state.loggedIn ? null : window.location.href.includes(
+            "/login"
+          ) ? null : (
+          <Redirect to="/login" />
+        )}
 
         {this.state.loggedIn ? (
           <Header loggedIn={this.state.loggedIn} signOut={this.signOut} />
