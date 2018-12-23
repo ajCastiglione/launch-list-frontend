@@ -128,7 +128,10 @@ class AddUser extends Component {
           ? this.setState({
               loading: false,
               success: true,
-              successMsg: "Successfully generated user!"
+              successMsg: "Successfully generated user!",
+              password: "",
+              role: "",
+              email: ""
             })
           : this.setState({
               failure: true,

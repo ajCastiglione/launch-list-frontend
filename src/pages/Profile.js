@@ -81,8 +81,7 @@ class Profile extends Component {
   };
 
   componentDidMount() {
-    if (this.props.role) this.setState({ role: this.props.role });
-    else this.fetchUserProfile();
+    this.fetchUserProfile();
   }
 
   fetchUserProfile = () => {

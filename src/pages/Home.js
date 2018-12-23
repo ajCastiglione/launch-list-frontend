@@ -38,6 +38,9 @@ class Home extends Component {
   };
 
   componentDidMount() {
+    if (!sessionStorage.token) {
+      window.location.href = "/login";
+    }
     this.getLists();
   }
 
