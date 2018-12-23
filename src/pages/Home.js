@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import url from "./../config/config";
 
 // UI lib
@@ -38,10 +38,10 @@ class Home extends Component {
   };
 
   componentDidMount() {
-    if (!sessionStorage.token) {
-      window.location.href = "/login";
-    }
-    this.getLists();
+    this.props
+      .checkForToken()
+      .then(token => (token ? this.getLists() : <Redirect to="/login" />))
+      .catch(e => <Redirect to="/login" />);
   }
 
   getLists = () => {

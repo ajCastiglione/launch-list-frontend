@@ -38,13 +38,16 @@ class App extends Component {
   }
 
   checkForToken = () => {
-    if (sessionStorage.token) {
-      this.setState({ loggedIn: true, authToken: sessionStorage.token });
-      return sessionStorage.token;
-    } else {
-      this.setState({ loggedIn: false });
-      return false;
-    }
+    return new Promise((resolve, reject) => {
+      if (sessionStorage.token) {
+        this.setState({ loggedIn: true, authToken: sessionStorage.token });
+        resolve(sessionStorage.token);
+        return sessionStorage.token;
+      } else {
+        this.setState({ loggedIn: false });
+        return false;
+      }
+    });
   };
 
   checkAuth = () => {
@@ -144,6 +147,7 @@ class App extends Component {
               loggedIn={this.state.loggedIn}
               signOut={this.signOut}
               updateListType={this.updateListType}
+              checkForToken={this.checkForToken}
             />
           )}
         />
