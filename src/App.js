@@ -6,6 +6,7 @@ import "./App.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Login from "./components/Login";
+import Signup from "./components/Signup";
 
 // Pages
 import Home from "./pages/Home";
@@ -129,9 +130,8 @@ class App extends Component {
   render() {
     return (
       <main className="App main">
-        {this.state.loggedIn ? null : window.location.href.includes(
-            "/login"
-          ) ? null : (
+        {this.state.loggedIn ? null : window.location.href.includes("/login") ||
+          window.location.href.includes("/signup") ? null : (
           <Redirect to="/login" />
         )}
 
@@ -159,6 +159,8 @@ class App extends Component {
             <Login signIn={this.signIn} resMsg={this.state.resMsg} />
           )}
         />
+
+        <Route path="/signup" exact component={Signup} />
 
         <Route
           path="/add-list"
