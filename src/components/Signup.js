@@ -84,6 +84,7 @@ class Signup extends Component {
 
   registerUser = (email, password, role, createCommand) => {
     let secret = `${process.env.REACT_APP_CRYPTO_SECRET}`;
+    console.log(secret);
     let command = CryptoJS.AES.encrypt(createCommand, secret).toString();
     fetch(`//${url}/users/add`, {
       method: "POST",
