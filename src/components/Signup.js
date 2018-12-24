@@ -66,7 +66,12 @@ class Signup extends Component {
 
   handleChange = e => {
     if (e.which === 13) return this.submitLogin();
-    this.setState({ [e.target.name]: e.target.value, warning: false });
+    this.setState({
+      [e.target.name]: e.target.value,
+      warning: false,
+      failure: false,
+      success: false
+    });
   };
 
   closeModal = () => this.setState({ warning: false });
@@ -84,7 +89,6 @@ class Signup extends Component {
 
   registerUser = (email, password, role, createCommand) => {
     let secret = `${process.env.REACT_APP_CRYPTO_SECRET}`;
-    console.log(secret);
     let command = CryptoJS.AES.encrypt(createCommand, secret).toString();
     fetch(`//${url}/users/add`, {
       method: "POST",
@@ -104,10 +108,12 @@ class Signup extends Component {
               role: "",
               createCommand: ""
             })
-          : this.setState({
-              failure: true,
-              msg: "Unable to add new user, creation code is incorrect."
-            })
+          : res.json().then(error =>
+              this.setState({
+                failure: true,
+                msg: error.err
+              })
+            )
       )
       .catch(e => console.error(e));
   };
@@ -119,7 +125,7 @@ class Signup extends Component {
         <form className="form">
           <img className="logo" src={logo} alt="logo" />
           <h3 className="form-title">Log in</h3>
-          {this.state.warning ? (
+          {this.state.warning || this.state.failure ? (
             <MySnackBar
               variant={this.state.failure ? "error" : "warning"}
               className={classes.margin}
