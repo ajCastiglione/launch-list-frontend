@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import logo from "./../logo.png";
 
 // UI Lib
@@ -8,6 +9,7 @@ import Button from "@material-ui/core/Button";
 import MySnackBar from "./../displayMessages/MySnackBar";
 import amber from "@material-ui/core/colors/amber";
 import { withStyles } from "@material-ui/core/styles";
+import { FormControl } from "@material-ui/core";
 
 const styles = theme => ({
   margin: {
@@ -114,14 +116,25 @@ class Login extends Component {
             onKeyPress={this.handleChange}
             value={this.state.pw}
           />
-          <Button
-            variant="contained"
-            color="primary"
-            className={`${classes.button} btn`}
-            onClick={this.submitLogin}
-          >
-            Sign In
-          </Button>
+          <FormControl className="btns-container">
+            <Button
+              variant="contained"
+              color="primary"
+              className={`${classes.button} btn-primary`}
+              onClick={this.submitLogin}
+            >
+              Sign In
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              className={`${classes.button} btn`}
+            >
+              <Link to="/signup" className="signup-btn">
+                Sign Up
+              </Link>
+            </Button>
+          </FormControl>
         </form>
       </main>
     );
