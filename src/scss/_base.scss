@@ -226,6 +226,27 @@ Body Section
 
 // Add List Page
 
+.add-list-form {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+
+  .input-txt-container {
+    width: 99%;
+    input {
+      max-width: 100%;
+      width: 100%;
+    }
+  }
+}
+
+.create-btn {
+  width: 100%;
+  margin-top: 1rem !important;
+  padding: 1rem 0 !important;
+}
+
 .add-list {
   padding: 2rem 0;
 }
@@ -245,10 +266,8 @@ Body Section
   text-transform: capitalize;
 }
 
-.add-list-subtitle {
+.add-list-title {
   text-transform: capitalize;
-  color: $blue;
-  margin: 15px 0;
 }
 
 .form-grid {
@@ -259,21 +278,27 @@ Body Section
   text-align: center;
   margin: 2rem 0 0 !important;
   width: 100% !important;
-
-  .input-txt-container {
-    margin: 10px auto;
-    width: 100%;
-    max-width: 350px;
-    input {
-      width: 100%;
-    }
-  }
 }
 
 .grid-left,
 .grid-right {
-  background-color: #f4f4f4;
   border-radius: 5px;
+}
+
+// Card displaying new list info
+.grid-left > div:first-child {
+  height: 100%;
+  max-width: 400px;
+  margin: auto;
+  button {
+    div:first-child {
+      padding: 1.3rem 0;
+    }
+  }
+}
+
+.capitalize {
+  text-transform: capitalize;
 }
 
 .success-msg {
