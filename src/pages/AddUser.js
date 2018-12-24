@@ -46,7 +46,6 @@ const styles = theme => ({
     height: 140,
     backgroundSize: "contain"
   },
-
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit
