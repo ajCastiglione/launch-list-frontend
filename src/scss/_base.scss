@@ -118,7 +118,8 @@ Body Section
 */
 
 // Login page
-.login-landing {
+.login-landing,
+.signup {
   background-image: url("https://s3.amazonaws.com/minervalists/cityBg.jpg");
   height: 100vh;
   background-repeat: no-repeat;
@@ -141,8 +142,11 @@ Body Section
     background: $gradient;
     border-radius: 10px;
     padding-bottom: 1rem;
-    .btn {
-      background-color: $lightblue;
+    .btn-primary {
+      background: $lightblue;
+      &:hover {
+        background-color: $lightgreen;
+      }
     }
   }
   .form-title {
@@ -159,8 +163,41 @@ Body Section
       color: $white;
     }
     label {
-      color: $gray;
+      color: $white;
     }
+  }
+  .btns-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+  .btn {
+    padding: 0 !important;
+    background: $lightgreen;
+    &:hover {
+      background-color: $lightblue;
+    }
+    .signup-btn {
+      color: $white;
+      padding: 8px 16px;
+      font-weight: 300;
+    }
+  }
+}
+// Signup page
+.signup {
+  background-image: url("https://images.pexels.com/photos/7919/pexels-photo.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
+  .input-txt,
+  .input-select {
+    color: $white;
+
+    input {
+      color: $white;
+    }
+  }
+  label {
+    color: $white;
   }
 }
 
