@@ -36,6 +36,15 @@ a {
   text-align: center;
 }
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  box-shadow: inset 0 0 0px 9999px $white;
+  border-radius: 5px;
+  -webkit-text-fill-color: $blue;
+}
+
 /**
 Header Section
 */
@@ -137,11 +146,12 @@ Body Section
   }
 
   .form {
+    width: 85%;
     max-width: 500px;
     text-align: center;
     background: $gradient;
     border-radius: 10px;
-    padding-bottom: 1rem;
+    padding: 0 15px 1rem;
     .btn-primary {
       background: $lightblue;
       &:hover {
@@ -597,7 +607,7 @@ User Section
 }
 .grid-container {
   max-width: 100% !important;
-  margin-top: 0 !important;
+  margin: 0 !important;
   align-items: stretch;
 }
 .grid-item:nth-child(1) > div:not(.spinner) {
