@@ -36,6 +36,7 @@ class App extends Component {
     if (this.state.authToken !== "") {
       this.checkAuth();
     }
+    this.keepAlive();
   }
 
   checkForToken = () => {
@@ -211,6 +212,12 @@ class App extends Component {
       </main>
     );
   }
+
+  keepAlive = () => {
+    setInterval(() => {
+      fetch(`//${url}`);
+    }, 60000);
+  };
 }
 
 export default App;
