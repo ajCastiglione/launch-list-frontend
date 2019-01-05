@@ -166,7 +166,11 @@ class Home extends Component {
                 size="small"
                 color="primary"
               >
-                <Link to="/add-list" className="btn">
+                <Link
+                  to="/add-list"
+                  className="btn"
+                  onMouseOver={() => this.handleMO(lists.type)}
+                >
                   Create More
                 </Link>
               </Button>
