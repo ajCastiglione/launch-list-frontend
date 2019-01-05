@@ -51,6 +51,7 @@ class Signup extends Component {
     password: "",
     createCommand: "",
     role: "",
+    loading: false,
     visible: false,
     warning: false,
     success: false,
@@ -84,6 +85,8 @@ class Signup extends Component {
         warning: true,
         warningMsg: "All fields are required to create a new user."
       });
+
+    this.setState({ loading: true });
     this.registerUser(email, password, role, createCommand);
   };
 
@@ -106,11 +109,13 @@ class Signup extends Component {
               email: "",
               password: "",
               role: "",
-              createCommand: ""
+              createCommand: "",
+              loading: false
             })
           : res.json().then(error =>
               this.setState({
                 failure: true,
+                loading: false,
                 msg: error.err
               })
             )
@@ -243,25 +248,29 @@ class Signup extends Component {
               value={this.state.createCommand}
             />
           </FormControl>
-          <FormControl className="btns-container">
-            <Button
-              variant="contained"
-              color="primary"
-              className={`${classes.button} btn-primary`}
-              onClick={this.submitLogin}
-            >
-              Register User
-            </Button>
-            <Button
-              variant="contained"
-              color="primary"
-              className={`${classes.button} btn`}
-            >
-              <Link to="/login" className="signup-btn">
-                Log in
-              </Link>
-            </Button>
-          </FormControl>
+          {this.state.loading ? (
+            <div className="spinner" />
+          ) : (
+            <FormControl className="btns-container">
+              <Button
+                variant="contained"
+                color="primary"
+                className={`${classes.button} btn-primary`}
+                onClick={this.submitLogin}
+              >
+                Register User
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                className={`${classes.button} btn`}
+              >
+                <Link to="/login" className="signup-btn">
+                  Log in
+                </Link>
+              </Button>
+            </FormControl>
+          )}
         </form>
       </article>
     );
