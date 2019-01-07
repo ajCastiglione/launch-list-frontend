@@ -152,12 +152,14 @@ class AddList extends Component {
         if (res.status === 200) {
           return res.json();
         } else {
-          this.setState({
-            warning: true,
-            failure: true,
-            msg: "List name must be unique."
+          res.json().then(err => {
+            this.setState({
+              warning: true,
+              failure: true,
+              msg: err
+            });
+            throw Error(err);
           });
-          throw Error("Duplicate key");
         }
       })
       .then(res => {
