@@ -10,9 +10,12 @@ import Signup from "./components/Signup";
 
 // Pages
 import Home from "./pages/Home";
+
+// List Pages
 import AddList from "./pages/AddList";
 import Lists from "./pages/views/Lists";
 import List from "./pages/views/List";
+import AllLists from "./pages/views/AllLists";
 
 // User pages
 import Profile from "./pages/Profile";
@@ -208,6 +211,17 @@ class App extends Component {
           }
         />
 
+        <Route
+          path="/users/lists"
+          render={() =>
+            this.state.role === "admin" ? (
+              <AllLists checkAuth={this.checkAuth} />
+            ) : (
+              <Redirect to="/" />
+            )
+          }
+        />
+
         {this.state.loggedIn ? <Footer /> : null}
       </main>
     );
@@ -216,7 +230,7 @@ class App extends Component {
   keepAlive = () => {
     setInterval(() => {
       fetch(`//${url}`);
-    }, 60000);
+    }, 1200000);
   };
 }
 
