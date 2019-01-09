@@ -230,7 +230,7 @@ class App extends Component {
   keepAlive = () => {
     setInterval(() => {
       fetch(`//${url}`);
-    }, 1200000);
+    }, 300000);
   };
 }
 
