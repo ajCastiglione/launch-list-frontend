@@ -54,6 +54,7 @@ class Lists extends Component {
   };
 
   componentDidMount() {
+    window.scrollTo(0, 0);
     this.fetchLists();
   }
 
@@ -300,22 +301,26 @@ class Lists extends Component {
           <section className="section-container">
             {modal}
             {this.state.lastWarning ? askToRestore : null}
-            <Paper className={classes.root}>
-              <Table className={classes.table}>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>{listType}s (All Lists)</TableCell>
-                    <TableCell>Type</TableCell>
-                    <TableCell>Items</TableCell>
-                    <TableCell>Status</TableCell>
-                    <TableCell>Date Created</TableCell>
-                    <TableCell>View</TableCell>
-                    <TableCell>Delete</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>{lists}</TableBody>
-              </Table>
-            </Paper>
+            {this.state.receivedLists ? (
+              <Paper className={classes.root}>
+                <Table className={classes.table}>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>{listType}s (All Lists)</TableCell>
+                      <TableCell>Type</TableCell>
+                      <TableCell>Items</TableCell>
+                      <TableCell>Status</TableCell>
+                      <TableCell>Date Created</TableCell>
+                      <TableCell>View</TableCell>
+                      <TableCell>Delete</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>{lists}</TableBody>
+                </Table>
+              </Paper>
+            ) : (
+              <div className="spinner" />
+            )}
           </section>
         </article>
       </div>

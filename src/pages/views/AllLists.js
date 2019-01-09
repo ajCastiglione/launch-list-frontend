@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import MySnackBar from "./../../displayMessages/MySnackBar";
 import url from "./../../config/config";
 
@@ -53,7 +53,12 @@ class AllLists extends Component {
   };
 
   componentDidMount() {
-    this.fetchLists();
+    window.scrollTo(0, 0);
+    this.props
+      .checkAuth()
+      .then(role =>
+        role === "admin" ? this.fetchLists() : <Redirect to="/" />
+      );
   }
 
   fetchLists = () => {
@@ -225,7 +230,7 @@ class AllLists extends Component {
         />
         <Link to="/" className="return-btn">
           <i className="fas fa-caret-left" />
-          Return to all lists
+          Return to home
         </Link>
         {this.state.noMatch ? (
           <div className="warning">
@@ -296,22 +301,26 @@ class AllLists extends Component {
           <section className="section-container">
             {modal}
             {this.state.lastWarning ? askToRestore : null}
-            <Paper className={classes.root}>
-              <Table className={classes.table}>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>All User Lists</TableCell>
-                    <TableCell>User ID</TableCell>
-                    <TableCell>Type</TableCell>
-                    <TableCell>Items</TableCell>
-                    <TableCell>Status</TableCell>
-                    <TableCell>Date Created</TableCell>
-                    <TableCell>Delete</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>{lists}</TableBody>
-              </Table>
-            </Paper>
+            {this.state.receivedLists ? (
+              <Paper className={classes.root}>
+                <Table className={classes.table}>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>All User Lists</TableCell>
+                      <TableCell>User ID</TableCell>
+                      <TableCell>Type</TableCell>
+                      <TableCell>Items</TableCell>
+                      <TableCell>Status</TableCell>
+                      <TableCell>Date Created</TableCell>
+                      <TableCell>Delete</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>{lists}</TableBody>
+                </Table>
+              </Paper>
+            ) : (
+              <div className="spinner" />
+            )}
           </section>
         </article>
       </div>
