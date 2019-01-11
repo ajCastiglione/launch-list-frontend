@@ -196,7 +196,7 @@ class AllLists extends Component {
             <TableCell component="th" scope="row">
               {el.listName}
             </TableCell>
-            <TableCell>{el._creator}</TableCell>
+            <TableCell>{el.email ? el.email : el._creator}</TableCell>
             <TableCell>{el.type}</TableCell>
             <TableCell>{el.items.length}</TableCell>
             <TableCell>{el.completed ? "Complete" : "Incomplete"}</TableCell>
