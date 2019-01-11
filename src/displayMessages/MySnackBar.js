@@ -60,7 +60,7 @@ class MySnackbarContent extends Component {
     const Icon = variantIcon[variant];
     return (
       <SnackbarContent
-        className={classNames(classes[variant], className)}
+        className={classNames(classes[variant], className, "snackbar")}
         aria-describedby="client-snackbar"
         message={
           <span id="client-snackbar" className={classes.message}>
@@ -78,7 +78,7 @@ class MySnackbarContent extends Component {
             key="close"
             aria-label="Close"
             color="inherit"
-            className={classes.close}
+            className={`${classes.close} close-icon`}
             onClick={onClose}
           >
             <CloseIcon className={classes.icon} />
