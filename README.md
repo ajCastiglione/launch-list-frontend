@@ -133,14 +133,13 @@ This app will have 5 set lists to choose from.
 <ol>
 <li><del>Add navigation</del></li>
 <li><del>Change color scheme, not liking the red combo anymore</del></li>
-<li>/all-lists - Figure out better layout for all lists page. Ugly</li>
-<li>/ - Display list types and total counts on home page on right side, will figure out main content</li>
+<li><del>/all-lists - Figure out better layout for all lists page. Ugly</del></li>
 <li><del>/lists/:type - Add functionality to delete btn</del></li>
 <li><del>/lists/:type - Add searchbar at top of component. Will add new state to handle this</del></li>
 <li><del>/list/:id - Create page that displays the selected list. Add CRUD abilities here</del></li>
 <li><del>/lists/:type - fix search feature. Clearing all input with crtl+bksp messes up display results</del></li>
 <li><del>/add-list - figure out why when linking directly to the new list it doesn't carry the necessary information to display the list</del></li>
-<li>Refactor app and put all requests into single file once all functionality is built out</li>
+<li>Continue to update list to better suit needs</li>
 </ol>
 
 ## Lists
@@ -163,11 +162,10 @@ This app will have 5 set lists to choose from.
 ## Users
 
 <ol>
-<li>Will need a signup route protected by a specific password</li>
-<li>Will need a route to add users once signed in, and verify user is superadmin or some shit</li>
-<li>Ability to view all users</li>
-<li>CRUD abilities panel for superadmin</li>
-<li>Update User schema on server to include username space and other customizable poritions as needed</li>
-<li>Add ability to update password</li>
+<li><del>Will need a signup route protected by a specific password</del></li>
+<li><del>Ability to view all users</del></li>
+<li><del>CRUD abilities panel for superadmin</del></li>
+<li><del>Update User schema on server to include username space and other customizable poritions as needed</del></li>
+<li><del>Add ability to update password</del></li>
 <li>Let users select which type of lists they want, whether it be for websites or something else. Will need to keep the same flow as existing style otherwise i'll have to redevelop a shit load</li>
 </ol>
