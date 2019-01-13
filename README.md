@@ -170,27 +170,11 @@ This app will have 5 set lists to choose from.
 ## Users
 
 <ol>
-<<<<<<< HEAD
-<li><del>Will need a signup route protected by a specific password</del></li>
-<li><del>Will need a route to add users once signed in, and verify user is admin</del></li>
-<li><del>Ability to view all users</del></li>
-<li><del>CRUD abilities panel for admin</del></li>
-<li><del>Update User schema on server to include username space and other customizable poritions as needed</del></li>
-<li><del>Add ability to update password</del></li>
-||||||| merged common ancestors
-<li>Will need a signup route protected by a specific password</li>
-<li>Will need a route to add users once signed in, and verify user is superadmin or some shit</li>
-<li>Ability to view all users</li>
-<li>CRUD abilities panel for superadmin</li>
-<li>Update User schema on server to include username space and other customizable poritions as needed</li>
-<li>Add ability to update password</li>
-=======
 <li><del>Will need a signup route protected by a specific password</del></li>
 <li><del>Ability to view all users</del></li>
 <li><del>CRUD abilities panel for superadmin</del></li>
 <li><del>Update User schema on server to include username space and other customizable poritions as needed</del></li>
 <li><del>Add ability to update password</del></li>
->>>>>>> cf5583c57c26ea1194e482ee991ecb7087864849
 <li>Let users select which type of lists they want, whether it be for websites or something else. Will need to keep the same flow as existing style otherwise i'll have to redevelop a shit load</li>
 </ol>
 
