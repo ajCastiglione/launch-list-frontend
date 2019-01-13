@@ -1,4 +1,15 @@
 /**
+Global Section
+*/
+
+.snackbar {
+  position: static;
+  div:nth-child(2) {
+    position: static;
+  }
+}
+
+/**
 Header Section
 */
 

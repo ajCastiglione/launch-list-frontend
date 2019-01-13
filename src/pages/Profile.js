@@ -281,12 +281,12 @@ class Profile extends Component {
               startAdornment: (
                 <InputAdornment position="start">
                   {this.state.visible ? (
+                    <Visibility className="vis-icon" onClick={this.toggleVis} />
+                  ) : (
                     <VisibilityOff
                       className="vis-icon"
                       onClick={this.toggleVis}
                     />
-                  ) : (
-                    <Visibility className="vis-icon" onClick={this.toggleVis} />
                   )}
                 </InputAdornment>
               )

@@ -126,7 +126,7 @@ class Nav extends Component {
                 <ListItemIcon>
                   <ViewList />
                 </ListItemIcon>
-                <ListItemText primary="User Actions" />
+                <ListItemText primary="Admin Actions" />
                 {this.state.open ? <ExpandLess /> : <ExpandMore />}
               </ListItem>
               <Collapse in={this.state.open} timeout="auto" unmountOnExit>
@@ -145,6 +145,14 @@ class Nav extends Component {
                       onClick={this.navItemClicked("left", false)}
                     >
                       Add User
+                    </Link>
+                  </ListItem>
+                  <ListItem button className={`${classes.nested} nav-item`}>
+                    <Link
+                      to="/users/lists"
+                      onClick={this.navItemClicked("left", false)}
+                    >
+                      View All Lists
                     </Link>
                   </ListItem>
                 </List>

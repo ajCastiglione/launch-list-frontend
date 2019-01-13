@@ -88,6 +88,8 @@ class AddList extends Component {
     this.setState({
       labelWidth: ReactDOM.findDOMNode(this.InputLabelRef).offsetWidth
     });
+    if (sessionStorage.listType)
+      this.setState({ listType: sessionStorage.listType });
   }
 
   closeModal = () =>
@@ -108,9 +110,10 @@ class AddList extends Component {
   prettifyName = () => {
     let name = this.state.listType;
     name = name.split("_");
-    name = `${name[0]} ${name[1]}`;
     if (this.state.listType === "ecom_live_list")
-      name = `${name[0]} ${name[1]} ${name[2]}`;
+      return (name = `${name[0]} ${name[1]} ${name[2]}`);
+
+    name = `${name[0]} ${name[1]}`;
     return name;
   };
 
@@ -149,12 +152,14 @@ class AddList extends Component {
         if (res.status === 200) {
           return res.json();
         } else {
-          this.setState({
-            warning: true,
-            failure: true,
-            msg: "List name must be unique."
+          res.json().then(err => {
+            this.setState({
+              warning: true,
+              failure: true,
+              msg: err
+            });
+            throw Error(err);
           });
-          throw Error("Duplicate key");
         }
       })
       .then(res => {

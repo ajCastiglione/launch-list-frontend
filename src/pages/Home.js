@@ -56,10 +56,9 @@ class Home extends Component {
           : new Error("Could not authenticate and acquire lists.")
       )
       .then(res => {
-        res.lists.map((el, idx) => {
+        res.lists.map(el => {
           let temp = this.state[el.type];
           temp.push(el);
-          if (temp.length >= 5) temp = temp.slice(0, 5);
           return this.setState({ [el.type]: temp });
         });
 
@@ -95,7 +94,9 @@ class Home extends Component {
             img: "https://s3.amazonaws.com/minervalists/ecom-live-list.jpg"
           }
         ];
-        this.setState({ listsAcquired: true, all_lists: allStateLists });
+        this.setState({ listsAcquired: true, all_lists: allStateLists }, () =>
+          window.scrollTo(0, 0)
+        );
       })
       .catch(e => console.error(e));
   };
@@ -166,7 +167,11 @@ class Home extends Component {
                 size="small"
                 color="primary"
               >
-                <Link to="/add-list" className="btn">
+                <Link
+                  to="/add-list"
+                  className="btn"
+                  onMouseOver={() => this.handleMO(lists.type)}
+                >
                   Create More
                 </Link>
               </Button>

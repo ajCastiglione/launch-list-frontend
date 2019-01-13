@@ -41,6 +41,7 @@ class List extends Component {
   };
 
   componentDidMount() {
+    window.scrollTo(0, 0);
     let params = new URLSearchParams(window.location.search);
     let id = params.get("id");
     this.setState({ id }, () => this.fetchList());

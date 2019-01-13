@@ -28,7 +28,8 @@ class Login extends Component {
     email: "",
     password: "",
     warning: false,
-    warningMsg: ""
+    warningMsg: "",
+    loading: false
   };
 
   componentDidMount() {
@@ -39,7 +40,11 @@ class Login extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.resMsg !== "") {
-      this.setState({ warningMsg: nextProps.resMsg, warning: true });
+      this.setState({
+        warningMsg: nextProps.resMsg,
+        warning: true,
+        loading: false
+      });
     }
   }
 
@@ -57,6 +62,7 @@ class Login extends Component {
         warning: true,
         warningMsg: "Both email and password are required."
       });
+    this.setState({ loading: true });
     this.props.signIn(email, password);
   };
 
@@ -116,25 +122,29 @@ class Login extends Component {
             onKeyPress={this.handleChange}
             value={this.state.pw}
           />
-          <FormControl className="btns-container">
-            <Button
-              variant="contained"
-              color="primary"
-              className={`${classes.button} btn-primary`}
-              onClick={this.submitLogin}
-            >
-              Sign In
-            </Button>
-            <Button
-              variant="contained"
-              color="primary"
-              className={`${classes.button} btn`}
-            >
-              <Link to="/signup" className="signup-btn">
-                Sign Up
-              </Link>
-            </Button>
-          </FormControl>
+          {this.state.loading ? (
+            <div className="spinner" />
+          ) : (
+            <FormControl className="btns-container">
+              <Button
+                variant="contained"
+                color="primary"
+                className={`${classes.button} btn-primary`}
+                onClick={this.submitLogin}
+              >
+                Sign In
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                className={`${classes.button} btn`}
+              >
+                <Link to="/signup" className="signup-btn">
+                  Sign Up
+                </Link>
+              </Button>
+            </FormControl>
+          )}
         </form>
       </main>
     );

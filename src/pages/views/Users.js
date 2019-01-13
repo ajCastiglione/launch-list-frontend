@@ -54,6 +54,7 @@ class Users extends Component {
   };
 
   componentDidMount() {
+    window.scrollTo(0, 0);
     this.props
       .checkAuth()
       .then(role =>
@@ -250,21 +251,25 @@ class Users extends Component {
                 onClick={this.closeModal}
               />
             ) : null}
-            <Paper className={classes.root}>
-              <Table className={classes.table}>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>All Users</TableCell>
-                    <TableCell>ID</TableCell>
-                    <TableCell>Email</TableCell>
-                    <TableCell>Role</TableCell>
-                    <TableCell>Username</TableCell>
-                    <TableCell>Delete</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>{users}</TableBody>
-              </Table>
-            </Paper>
+            {this.state.receivedUsers ? (
+              <Paper className={classes.root}>
+                <Table className={classes.table}>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>All Users</TableCell>
+                      <TableCell>ID</TableCell>
+                      <TableCell>Email</TableCell>
+                      <TableCell>Role</TableCell>
+                      <TableCell>Username</TableCell>
+                      <TableCell>Delete</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>{users}</TableBody>
+                </Table>
+              </Paper>
+            ) : (
+              <div className="spinner" />
+            )}
           </section>
         </article>
       </div>

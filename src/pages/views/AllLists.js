@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import MySnackBar from "./../../displayMessages/MySnackBar";
 import url from "./../../config/config";
 
@@ -38,16 +38,15 @@ const styles = theme => ({
   }
 });
 
-class Lists extends Component {
+class AllLists extends Component {
   state = {
-    listType: this.props.listType
-      ? this.props.listType
-      : sessionStorage.listType,
+    listType: "",
     lists: [],
     receivedLists: false,
     searchResults: [],
     defaultLists: [],
     listToRemove: null,
+    creator: null,
     removedList: {},
     lastWarning: false,
     open: false
@@ -55,28 +54,31 @@ class Lists extends Component {
 
   componentDidMount() {
     window.scrollTo(0, 0);
-    this.fetchLists();
+    this.props
+      .checkAuth()
+      .then(role =>
+        role === "admin" ? this.fetchLists() : <Redirect to="/" />
+      );
   }
 
   fetchLists = () => {
-    let { listType } = this.state;
-    fetch(`//${url}/lists/${listType}`, {
+    fetch(`//${url}/all-lists`, {
       headers: {
         "x-auth": sessionStorage.token
       }
     })
-      .then(res =>
-        res.status === 200
-          ? res.json()
-          : new Error("Could not authenticate and acquire lists.")
-      )
       .then(res => {
-        this.setState({
-          lists: res.lists,
-          receivedLists: true,
-          searchResults: res.lists,
-          defaultLists: res.lists
-        });
+        if (res.status === 200) return res.json();
+      })
+      .then(res => {
+        if (res) {
+          this.setState({
+            lists: res.lists,
+            receivedLists: true,
+            searchResults: res.lists,
+            defaultLists: res.lists
+          });
+        }
       })
       .catch(e => console.error(e));
   };
@@ -118,15 +120,22 @@ class Lists extends Component {
     });
   };
 
-  askToDelete = id => this.setState({ listToRemove: id, open: true });
+  askToDelete = (id, creator, type) =>
+    this.setState({
+      listToRemove: id,
+      creator,
+      listType: type,
+      open: true
+    });
 
   deleteList = () => {
-    let { listToRemove } = this.state;
+    let { listToRemove, creator } = this.state;
     let id = listToRemove;
     fetch(`//${url}/lists/${id}`, {
       method: "delete",
       headers: {
-        "x-auth": sessionStorage.token
+        "x-auth": sessionStorage.token,
+        creator
       }
     })
       .then(res =>
@@ -145,7 +154,7 @@ class Lists extends Component {
   dismissRestore = () => this.setState({ lastWarning: false });
 
   restoreList = () => {
-    let { removedList, listType } = this.state;
+    let { removedList, listType, creator } = this.state;
     fetch(`//${url}/lists`, {
       method: "POST",
       headers: {
@@ -155,7 +164,8 @@ class Lists extends Component {
       body: JSON.stringify({
         type: listType,
         listName: removedList.listName,
-        items: removedList.items
+        items: removedList.items,
+        creator
       })
     })
       .then(res =>
@@ -179,13 +189,14 @@ class Lists extends Component {
 
   render() {
     const { classes } = this.props;
-    const { listType, receivedLists } = this.state;
+    const { receivedLists } = this.state;
     const lists = receivedLists
       ? this.state.searchResults.map(el => (
           <TableRow key={el._id}>
             <TableCell component="th" scope="row">
               {el.listName}
             </TableCell>
+            <TableCell>{el.email ? el.email : el._creator}</TableCell>
             <TableCell>{el.type}</TableCell>
             <TableCell>{el.items.length}</TableCell>
             <TableCell>{el.completed ? "Complete" : "Incomplete"}</TableCell>
@@ -199,19 +210,8 @@ class Lists extends Component {
             <TableCell>
               <Button
                 variant="contained"
-                color="primary"
-                className="link-container"
-              >
-                <Link to={`/list?id=${el._id}`} className="btn">
-                  View
-                </Link>
-              </Button>
-            </TableCell>
-            <TableCell>
-              <Button
-                variant="contained"
                 color="secondary"
-                onClick={() => this.askToDelete(el._id)}
+                onClick={() => this.askToDelete(el._id, el._creator, el.type)}
               >
                 Delete
               </Button>
@@ -230,7 +230,7 @@ class Lists extends Component {
         />
         <Link to="/" className="return-btn">
           <i className="fas fa-caret-left" />
-          Return to all lists
+          Return to home
         </Link>
         {this.state.noMatch ? (
           <div className="warning">
@@ -295,9 +295,9 @@ class Lists extends Component {
 
     return (
       <div className="all-lists-type">
-        <h1 className="article-title">All {this.prettifyName(listType)}</h1>
+        <h1 className="article-title">All Users Lists - Admin View</h1>
         {searchBar}
-        <article className={`list-table ${listType}`}>
+        <article className="list-table">
           <section className="section-container">
             {modal}
             {this.state.lastWarning ? askToRestore : null}
@@ -306,12 +306,12 @@ class Lists extends Component {
                 <Table className={classes.table}>
                   <TableHead>
                     <TableRow>
-                      <TableCell>{listType}s (All Lists)</TableCell>
+                      <TableCell>All User Lists</TableCell>
+                      <TableCell>User ID</TableCell>
                       <TableCell>Type</TableCell>
                       <TableCell>Items</TableCell>
                       <TableCell>Status</TableCell>
                       <TableCell>Date Created</TableCell>
-                      <TableCell>View</TableCell>
                       <TableCell>Delete</TableCell>
                     </TableRow>
                   </TableHead>
@@ -328,4 +328,4 @@ class Lists extends Component {
   }
 }
 
-export default withStyles(styles)(Lists);
+export default withStyles(styles)(AllLists);
