@@ -152,14 +152,19 @@ class AddList extends Component {
         if (res.status === 200) {
           return res.json();
         } else {
-          res.json().then(err => {
-            this.setState({
-              warning: true,
-              failure: true,
-              msg: err
-            });
-            throw Error(err);
-          });
+          res
+            .json()
+            .then(err => {
+              this.setState({
+                warning: true,
+                failure: true,
+                msg: err.errmsg ? "Lists cannot have the same name." : err
+              });
+            })
+            .catch(e => Error(e));
+          throw new Error(
+            "Server handled rejection. Check screen for more information."
+          );
         }
       })
       .then(res => {
