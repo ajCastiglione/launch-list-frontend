@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import url from "./../config/config";
+import { url } from "./../config/config";
 
 // UI Lib
 import { withStyles } from "@material-ui/core/styles";
@@ -109,8 +109,8 @@ class Nav extends Component {
             </Link>
           </ListItem>
           <ListItem button className="nav-item">
-            <Link to="/" onClick={this.topItemClicked("left", false)}>
-              All Lists
+            <Link to="/uptime" onClick={this.topItemClicked("left", false)}>
+              Uptime Monitors
             </Link>
           </ListItem>
           <ListItem button className="nav-item">

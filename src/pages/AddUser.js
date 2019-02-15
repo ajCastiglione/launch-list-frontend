@@ -3,7 +3,7 @@ import { Redirect } from "react-router-dom";
 import ReactDOM from "react-dom";
 import MySnackBar from "./../displayMessages/MySnackBar";
 import validator from "validator";
-import url from "./../config/config";
+import { url } from "./../config/config";
 
 // UI Lib
 import { withStyles } from "@material-ui/core/styles";

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import MySnackBar from "./../../displayMessages/MySnackBar";
-import url from "./../../config/config";
+import { url } from "../../config/config";
 
 // UI Lib
 import { withStyles } from "@material-ui/core/styles";

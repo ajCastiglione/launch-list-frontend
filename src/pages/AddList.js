@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
-import url from "./../config/config";
+import { url } from "./../config/config";
 
 // Display messages
 import MySnackBar from "./../displayMessages/MySnackBar";

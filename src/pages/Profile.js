@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import MySnackBar from "./../displayMessages/MySnackBar";
 import validator from "validator";
-import url from "./../config/config";
+import { url } from "./../config/config";
 
 // UI Lib
 import { withStyles } from "@material-ui/core/styles";

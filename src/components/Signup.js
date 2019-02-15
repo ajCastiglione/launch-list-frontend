@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import { Link } from "react-router-dom";
 import logo from "./../logo.png";
-import url from "./../config/config";
+import { url } from "./../config/config";
 import CryptoJS from "crypto-js";
 
 // UI Lib

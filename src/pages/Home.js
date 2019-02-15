@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Redirect, Link } from "react-router-dom";
-import url from "./../config/config";
+import { url } from "./../config/config";
 
 // UI lib
 import { withStyles } from "@material-ui/core/styles";

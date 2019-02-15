@@ -1,4 +1,4 @@
-let url;
+export let url;
 
 if (window.location.href.includes("localhost")) {
   url = "localhost:5000";
@@ -6,4 +6,9 @@ if (window.location.href.includes("localhost")) {
   url = "minerva-checklist.herokuapp.com";
 }
 
-export default url;
+export let uptimeUrl;
+if (window.location.href.includes("localhost")) {
+  uptimeUrl = "localhost:5050";
+} else {
+  uptimeUrl = "";
+}

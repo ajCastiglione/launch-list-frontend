@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route, Redirect } from "react-router-dom";
+import { Route, Redirect, Switch } from "react-router-dom";
 import "./App.css";
 
 // Sections
@@ -22,8 +22,11 @@ import Profile from "./pages/Profile";
 import Users from "./pages/views/Users";
 import AddUser from "./pages/AddUser";
 
+// Uptime monitor
+import Monitors from "./pages/Monitors";
+
 // Config
-import url from "./config/config";
+import { url } from "./config/config";
 
 class App extends Component {
   state = {
@@ -142,86 +145,91 @@ class App extends Component {
         {this.state.loggedIn ? (
           <Header loggedIn={this.state.loggedIn} signOut={this.signOut} />
         ) : null}
+        <Switch>
+          <Route
+            path="/"
+            exact
+            render={() => (
+              <Home
+                loggedIn={this.state.loggedIn}
+                signOut={this.signOut}
+                updateListType={this.updateListType}
+                checkForToken={this.checkForToken}
+              />
+            )}
+          />
 
-        <Route
-          path="/"
-          exact
-          render={() => (
-            <Home
-              loggedIn={this.state.loggedIn}
-              signOut={this.signOut}
-              updateListType={this.updateListType}
-              checkForToken={this.checkForToken}
-            />
-          )}
-        />
+          <Route
+            path="/login"
+            exact
+            render={() => (
+              <Login signIn={this.signIn} resMsg={this.state.resMsg} />
+            )}
+          />
 
-        <Route
-          path="/login"
-          exact
-          render={() => (
-            <Login signIn={this.signIn} resMsg={this.state.resMsg} />
-          )}
-        />
+          <Route path="/signup" exact component={Signup} />
 
-        <Route path="/signup" exact component={Signup} />
+          <Route
+            path="/add-list"
+            render={() => <AddList updateListType={this.updateListType} />}
+          />
 
-        <Route
-          path="/add-list"
-          render={() => <AddList updateListType={this.updateListType} />}
-        />
+          <Route
+            path="/lists/:listType"
+            render={() => <Lists listType={this.state.listType} />}
+          />
 
-        <Route
-          path="/lists/:listType"
-          render={() => <Lists listType={this.state.listType} />}
-        />
+          <Route
+            path="/list"
+            render={() => <List listType={this.state.listType} />}
+          />
 
-        <Route
-          path="/list"
-          render={() => <List listType={this.state.listType} />}
-        />
+          <Route path="/uptime" component={Monitors} />
 
-        {/* User routes */}
+          {/* User routes */}
 
-        <Route
-          path="/profile"
-          render={() => <Profile role={this.state.role} />}
-        />
+          <Route
+            path="/profile"
+            render={() => <Profile role={this.state.role} />}
+          />
 
-        <Route
-          exact
-          path="/users"
-          render={() =>
-            this.state.role === "admin" ? (
-              <Users checkAuth={this.checkAuth} />
-            ) : (
-              <Redirect to="/" />
-            )
-          }
-        />
+          {/* Admin routes */}
 
-        <Route
-          path="/users/add"
-          render={() =>
-            this.state.role === "admin" ? (
-              <AddUser checkAuth={this.checkAuth} />
-            ) : (
-              <Redirect to="/" />
-            )
-          }
-        />
+          <Route
+            exact
+            path="/users"
+            render={() =>
+              this.state.role === "admin" ? (
+                <Users checkAuth={this.checkAuth} />
+              ) : (
+                <Redirect to="/" />
+              )
+            }
+          />
 
-        <Route
-          path="/users/lists"
-          render={() =>
-            this.state.role === "admin" ? (
-              <AllLists checkAuth={this.checkAuth} />
-            ) : (
-              <Redirect to="/" />
-            )
-          }
-        />
+          <Route
+            path="/users/add"
+            render={() =>
+              this.state.role === "admin" ? (
+                <AddUser checkAuth={this.checkAuth} />
+              ) : (
+                <Redirect to="/" />
+              )
+            }
+          />
 
+          <Route
+            path="/users/lists"
+            render={() =>
+              this.state.role === "admin" ? (
+                <AllLists checkAuth={this.checkAuth} />
+              ) : (
+                <Redirect to="/" />
+              )
+            }
+          />
+          <Redirect to="/" />
+        </Switch>
         {this.state.loggedIn ? <Footer /> : null}
       </main>
     );
