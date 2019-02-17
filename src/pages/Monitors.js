@@ -1,18 +1,12 @@
 import React, { Component } from "react";
+
+// Local Modules
 import MySnackBar from "../displayMessages/MySnackBar";
 import { uptimeUrl } from "../config/config";
+import PaginatedTable from "../components/PaginatedTable";
 
 // UI Lib
 import { withStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
-import Button from "@material-ui/core/Button";
-import Modal from "@material-ui/core/Modal";
-import Typography from "@material-ui/core/Typography";
 
 const styles = theme => ({
   root: {
@@ -43,7 +37,17 @@ class Monitors extends Component {
     noMatch: false,
     monitors: [],
     filteredMonitors: [],
-    originalList: []
+    originalList: [],
+    tableHeaders: [
+      "Website",
+      "Status",
+      "Monitoring",
+      "Time Last Checked",
+      "Interval",
+      "Notify Email",
+      "Website Name",
+      "Update"
+    ]
   };
 
   componentDidMount() {
@@ -66,7 +70,7 @@ class Monitors extends Component {
           isLoaded: true
         });
       })
-      .catch(e => console.log(e));
+      .catch(e => this.setState({ failToFetch: true }));
   };
 
   handleSearch = e => {
@@ -104,23 +108,7 @@ class Monitors extends Component {
   render() {
     const { classes } = this.props;
     const { isLoaded } = this.state;
-    const monitors = isLoaded
-      ? this.state.filteredMonitors.map(el => (
-          <TableRow key={el._id}>
-            <TableCell component="th" scope="row">
-              {el.url}
-            </TableCell>
-            <TableCell>{el.siteStatus ? el.siteStatus : "No Data"}</TableCell>
-            <TableCell>{el.status}</TableCell>
-            <TableCell>{this.formatDate(el.timeLastChecked)}</TableCell>
-            <TableCell>{`${el.settings.interval} ${
-              el.settings.intervalType
-            }`}</TableCell>
-            <TableCell>{el.adminEmail}</TableCell>
-            <TableCell>{el.websiteName ? el.websiteName : el.url}</TableCell>
-          </TableRow>
-        ))
-      : null;
+
     const searchBar = (
       <div className="search-bar-container">
         <input
@@ -143,26 +131,21 @@ class Monitors extends Component {
       </div>
     );
     return (
-      <article className="section-container uptime-section">
+      <article className="uptime-article">
         {searchBar}
-        <section className="table">
+        <section className="section-container table">
           {isLoaded ? (
-            <Paper className={classes.root}>
-              <Table className={classes.table}>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Website</TableCell>
-                    <TableCell>Status</TableCell>
-                    <TableCell>Monitoring</TableCell>
-                    <TableCell>Time Last Checked</TableCell>
-                    <TableCell>Interval</TableCell>
-                    <TableCell>Notify Email</TableCell>
-                    <TableCell>Website Name</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>{monitors}</TableBody>
-              </Table>
-            </Paper>
+            <PaginatedTable
+              monitors={this.state.filteredMonitors}
+              header={this.state.tableHeaders}
+            />
+          ) : this.state.failToFetch ? (
+            <div className="error">
+              <h1>Server Unresponsive</h1>
+              <p>
+                If this error persists, please contact a systems administrator.
+              </p>
+            </div>
           ) : (
             <div className="spinner" />
           )}
