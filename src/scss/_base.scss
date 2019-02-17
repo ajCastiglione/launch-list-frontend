@@ -475,7 +475,8 @@ Body Section
 }
 
 .list-table,
-.users-table {
+.users-table,
+.uptime-article {
   margin-bottom: 2rem;
   .section-container {
     padding: 1rem 2rem;
@@ -677,6 +678,15 @@ Footer Section
 
 .footer-logo {
   max-width: 150px;
+}
+
+/**
+Uptime monitor page
+*/
+
+.error {
+  text-align: center;
+  margin: 20px 10px;
 }
 
 /**
