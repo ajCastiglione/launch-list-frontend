@@ -8,7 +8,7 @@ if (window.location.href.includes("localhost")) {
 
 export let uptimeUrl;
 if (window.location.href.includes("localhost")) {
-  uptimeUrl = "localhost:5050";
+  uptimeUrl = "//localhost:5050";
 } else {
   uptimeUrl = "";
 }

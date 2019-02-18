@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 import _ from "lodash";
 // UI lib
 import { withStyles } from "@material-ui/core/styles";
@@ -167,7 +168,7 @@ class PaginatedTable extends React.Component {
               </TableRow>
             </TableHead>
             <TableBody>
-              {this.state.rows
+              {rows
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map(row => (
                   <TableRow key={row._id}>
@@ -192,9 +193,11 @@ class PaginatedTable extends React.Component {
                       <Button
                         variant="contained"
                         color="primary"
-                        className={classes.button}
+                        className="btn-container"
                       >
-                        Edit
+                        <Link className="btn" to={`/monitor?id=${row._id}`}>
+                          Edit
+                        </Link>
                       </Button>
                     </TableCell>
                   </TableRow>
