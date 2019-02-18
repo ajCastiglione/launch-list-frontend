@@ -24,6 +24,7 @@ import AddUser from "./pages/AddUser";
 
 // Uptime monitor
 import Monitors from "./pages/Monitors";
+import Monitor from "./pages/views/Monitor";
 
 // Config
 import { url } from "./config/config";
@@ -185,6 +186,8 @@ class App extends Component {
           />
 
           <Route path="/uptime" component={Monitors} />
+
+          <Route path="/monitor" component={Monitor} />
 
           {/* User routes */}
 

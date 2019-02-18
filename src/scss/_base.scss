@@ -233,19 +233,22 @@ Body Section
 }
 
 // Home Page
+.grid-container {
+  margin: 1rem 0;
+  justify-content: center;
+  align-items: stretch;
+  max-width: 100%;
+}
+
 .home-article {
   .article-title {
     background-image: url("https://s3.amazonaws.com/minervalists/Home_bg.jpg");
   }
-  .grid-container {
-    margin: 1rem 0;
-    justify-content: center;
-    align-items: stretch;
-    max-width: 100%;
-    text-align: center;
-  }
   .section-container {
     padding: 2rem 10px;
+  }
+  .grid-container {
+    text-align: center;
   }
   .btn-container {
     padding: 0;
@@ -683,6 +686,22 @@ Footer Section
 /**
 Uptime monitor page
 */
+
+.uptime-article {
+  .btn-container {
+    padding: 0;
+  }
+}
+
+.monitor-single {
+  .input-txt-container {
+    width: 99%;
+    input {
+      max-width: 100%;
+      width: 100%;
+    }
+  }
+}
 
 .error {
   text-align: center;
