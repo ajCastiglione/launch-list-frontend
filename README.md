@@ -133,15 +133,7 @@ This app will have 5 set lists to choose from.
 <ol>
 <li><del>Add navigation</del></li>
 <li><del>Change color scheme, not liking the red combo anymore</del></li>
-<<<<<<< HEAD
-<li><del>/all-lists - Figure out better layout for all lists page. Ugly</del>Lives on home pg now</li>
-<li><del>/ - Display list types and total counts on home page on right side, will figure out main content</del> Displays all lists</li>
-||||||| merged common ancestors
-<li>/all-lists - Figure out better layout for all lists page. Ugly</li>
-<li>/ - Display list types and total counts on home page on right side, will figure out main content</li>
-=======
 <li><del>/all-lists - Figure out better layout for all lists page. Ugly</del></li>
->>>>>>> cf5583c57c26ea1194e482ee991ecb7087864849
 <li><del>/lists/:type - Add functionality to delete btn</del></li>
 <li><del>/lists/:type - Add searchbar at top of component. Will add new state to handle this</del></li>
 <li><del>/list/:id - Create page that displays the selected list. Add CRUD abilities here</del></li>
