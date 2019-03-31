@@ -7,6 +7,9 @@ import PaginatedTable from "../components/PaginatedTable";
 
 // UI Lib
 import { withStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+import Modal from "@material-ui/core/Modal";
+import Typography from "@material-ui/core/Typography";
 
 const styles = theme => ({
   root: {
@@ -38,6 +41,8 @@ class Monitors extends Component {
     monitors: [],
     filteredMonitors: [],
     originalList: [],
+    siteToRemove: null,
+    open: false,
     tableHeaders: [
       "Website",
       "Status",
@@ -105,6 +110,26 @@ class Monitors extends Component {
       : "Never Been Monitored";
   };
 
+  askToDelete = url => this.setState({ siteToRemove: url, open: true });
+  handleClose = () => this.setState({ open: false, siteToRemove: null });
+
+  removeMonitor = () => {
+    // Remove monitor - update list - display new results
+    fetch(`${uptimeUrl}/remove`, {
+      method: "DELETE",
+      headers: {
+        "x-auth": sessionStorage.token,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ website: this.state.siteToRemove })
+    })
+      .then(res => {
+        this.fetchMonitors();
+        this.handleClose();
+      })
+      .catch(e => console.log(e));
+  };
+
   render() {
     const { classes } = this.props;
     const { isLoaded } = this.state;
@@ -130,14 +155,49 @@ class Monitors extends Component {
         ) : null}
       </div>
     );
+
+    const modal = (
+      <Modal
+        aria-labelledby="delete-modal-title"
+        aria-describedby="delete-modal-description"
+        open={this.state.open}
+        onClose={this.handleClose}
+      >
+        <div className={classes.paper}>
+          <Typography variant="h6" id="modal-title">
+            Are you sure you want to remove this website from your active
+            monitors?
+          </Typography>
+          <div className="btn-container">
+            <Button
+              color="secondary"
+              variant="contained"
+              onClick={this.removeMonitor}
+            >
+              Remove The Site
+            </Button>
+            <Button
+              color="primary"
+              variant="contained"
+              onClick={this.handleClose}
+            >
+              Keep The Site
+            </Button>
+          </div>
+        </div>
+      </Modal>
+    );
+
     return (
       <article className="uptime-article">
         {searchBar}
+        {modal}
         <section className="section-container table">
           {isLoaded ? (
             <PaginatedTable
               monitors={this.state.filteredMonitors}
               header={this.state.tableHeaders}
+              askToDelete={this.askToDelete}
             />
           ) : this.state.failToFetch ? (
             <div className="error">

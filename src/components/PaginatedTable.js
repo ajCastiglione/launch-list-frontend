@@ -165,6 +165,7 @@ class PaginatedTable extends React.Component {
                 {this.props.header.map(row => (
                   <TableCell key={`${row}_name`}>{row}</TableCell>
                 ))}
+                <TableCell>Delete</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -198,6 +199,16 @@ class PaginatedTable extends React.Component {
                         <Link className="btn" to={`/monitor?id=${row._id}`}>
                           Edit
                         </Link>
+                      </Button>
+                    </TableCell>
+                    <TableCell align="right">
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        className="btn"
+                        onClick={() => this.props.askToDelete(row.url)}
+                      >
+                        Delete
                       </Button>
                     </TableCell>
                   </TableRow>
