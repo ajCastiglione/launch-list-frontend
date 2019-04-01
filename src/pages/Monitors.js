@@ -30,8 +30,7 @@ const styles = theme => ({
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    width: "100%",
-    maxWidth: 450
+    width: "100%"
   },
   formControl: {
     margin: theme.spacing.unit,
@@ -75,7 +74,9 @@ class Monitors extends Component {
       "Interval",
       "Notify Email",
       "Website Name",
-      "Update"
+      "Start",
+      "Edit",
+      "Delete"
     ],
     labelWidth: 0
   };
@@ -144,9 +145,36 @@ class Monitors extends Component {
       open: false,
       siteToRemove: null,
       warning: false,
-      failure: false
+      failure: false,
+      success: false,
+      startFail: false,
+      startSuc: false
     });
   handleChange = evt => this.setState({ [evt.target.name]: evt.target.value });
+
+  startMonitor = website => {
+    fetch(`${uptimeUrl}/start`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-auth": sessionStorage.token
+      },
+      body: JSON.stringify({ website })
+    })
+      .then(res => res.json())
+      .then(res => {
+        console.log(res);
+        if (res.err)
+          this.setState({ startFail: true, startSuc: false, msg: res.err });
+        else
+          this.setState({
+            startSuc: true,
+            startFail: false,
+            msg: `Started Monitoring ${website}`
+          });
+      })
+      .catch(e => console.log(e));
+  };
 
   removeMonitor = () => {
     // Remove monitor - update list - display new results
@@ -199,10 +227,19 @@ class Monitors extends Component {
     })
       .then(res => res.json())
       .then(res => {
-        console.log(res);
         if (res.name === "ValidationError")
           return this.setState({ failure: true, msg: res.message });
-        else this.fetchMonitors();
+        else {
+          this.fetchMonitors();
+          this.setState({
+            msg: `Successfully Added ${this.state.newSiteUrl}`,
+            newSiteName: "",
+            newSiteUrl: "",
+            interval: "",
+            email: "",
+            success: true
+          });
+        }
       })
       .catch(e => {
         console.log(e);
@@ -270,13 +307,15 @@ class Monitors extends Component {
     const addMonitor = (
       <React.Fragment>
         <h2 className="section-title">Add website to monitor</h2>
-        {this.state.failure || this.state.warning ? (
+        {this.state.failure || this.state.warning || this.state.success ? (
           <MySnackBar
             variant={
               this.state.warning
                 ? "warning"
                 : this.state.failure
                 ? "error"
+                : this.state.success
+                ? "success"
                 : null
             }
             className={classes.margin}
@@ -292,6 +331,7 @@ class Monitors extends Component {
             name="newSiteUrl"
             onChange={this.handleChange}
             margin="normal"
+            variant="outlined"
             required
           />
           <TextField
@@ -301,6 +341,7 @@ class Monitors extends Component {
             name="email"
             onChange={this.handleChange}
             margin="normal"
+            variant="outlined"
             required
           />
           <TextField
@@ -310,6 +351,7 @@ class Monitors extends Component {
             name="newSiteName"
             onChange={this.handleChange}
             margin="normal"
+            variant="outlined"
           />
           <FormControl variant="outlined" className={classes.formControl}>
             <InputLabel
@@ -342,6 +384,7 @@ class Monitors extends Component {
         <Button
           color="primary"
           variant="outlined"
+          className="add-btn"
           onClick={() => this.addWebsite()}
         >
           Start monitoring
@@ -357,10 +400,27 @@ class Monitors extends Component {
           {isLoaded ? (
             <React.Fragment>
               <h2 className="section-title">Websites being monitored</h2>
+              {this.state.startFail || this.state.startSuc ? (
+                <div className="warning">
+                  <MySnackBar
+                    variant={
+                      this.state.startFail
+                        ? "error"
+                        : this.state.startSuc
+                        ? "success"
+                        : "warning"
+                    }
+                    className={classes.margin}
+                    message={this.state.msg}
+                    onClose={this.handleClose}
+                  />
+                </div>
+              ) : null}
               <PaginatedTable
                 monitors={this.state.filteredMonitors}
                 header={this.state.tableHeaders}
                 askToDelete={this.askToDelete}
+                startMonitor={this.startMonitor}
               />
             </React.Fragment>
           ) : this.state.failToFetch ? (
