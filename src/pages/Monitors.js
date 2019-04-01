@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import ReactDOM from "react-dom";
 
 // Local Modules
 import MySnackBar from "../displayMessages/MySnackBar";
@@ -10,6 +11,12 @@ import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Modal from "@material-ui/core/Modal";
 import Typography from "@material-ui/core/Typography";
+import TextField from "@material-ui/core/TextField";
+import OutlinedInput from "@material-ui/core/OutlinedInput";
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
 
 const styles = theme => ({
   root: {
@@ -19,6 +26,19 @@ const styles = theme => ({
   },
   table: {
     minWidth: 700
+  },
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width: "100%",
+    maxWidth: 450
+  },
+  formControl: {
+    margin: theme.spacing.unit,
+    minWidth: 175
+  },
+  selectEmpty: {
+    marginTop: theme.spacing.unit * 2
   },
   paper: {
     position: "absolute",
@@ -43,6 +63,10 @@ class Monitors extends Component {
     originalList: [],
     siteToRemove: null,
     open: false,
+    newSiteUrl: "",
+    newSiteName: "",
+    interval: "",
+    email: "",
     tableHeaders: [
       "Website",
       "Status",
@@ -52,12 +76,16 @@ class Monitors extends Component {
       "Notify Email",
       "Website Name",
       "Update"
-    ]
+    ],
+    labelWidth: 0
   };
 
   componentDidMount() {
     window.scrollTo(0, 0);
     this.fetchMonitors();
+    this.setState({
+      labelWidth: ReactDOM.findDOMNode(this.InputLabelRef).offsetWidth
+    });
   }
 
   fetchMonitors = () => {
@@ -111,7 +139,14 @@ class Monitors extends Component {
   };
 
   askToDelete = url => this.setState({ siteToRemove: url, open: true });
-  handleClose = () => this.setState({ open: false, siteToRemove: null });
+  handleClose = () =>
+    this.setState({
+      open: false,
+      siteToRemove: null,
+      warning: false,
+      failure: false
+    });
+  handleChange = evt => this.setState({ [evt.target.name]: evt.target.value });
 
   removeMonitor = () => {
     // Remove monitor - update list - display new results
@@ -128,6 +163,50 @@ class Monitors extends Component {
         this.handleClose();
       })
       .catch(e => console.log(e));
+  };
+
+  generateSelectItems = () => {
+    let itemsArr = [];
+    for (let i = 5; i <= 60; i += 5) {
+      itemsArr.push(
+        <MenuItem value={i} key={i}>
+          {i}
+        </MenuItem>
+      );
+    }
+    return itemsArr;
+  };
+
+  addWebsite = () => {
+    let { newSiteUrl, newSiteName, interval, email } = this.state;
+    if (!newSiteUrl || !interval || !email)
+      return this.setState({
+        warning: true,
+        msg: "Please Fill Out The Required Fields!"
+      });
+    fetch(`${uptimeUrl}/add-website`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-auth": sessionStorage.token
+      },
+      body: JSON.stringify({
+        url: newSiteUrl,
+        settings: { intervalType: "min", interval },
+        email,
+        websiteName: newSiteName
+      })
+    })
+      .then(res => res.json())
+      .then(res => {
+        console.log(res);
+        if (res.name === "ValidationError")
+          return this.setState({ failure: true, msg: res.message });
+        else this.fetchMonitors();
+      })
+      .catch(e => {
+        console.log(e);
+      });
   };
 
   render() {
@@ -150,6 +229,7 @@ class Monitors extends Component {
               variant="warning"
               className={classes.margin}
               message={this.state.msg}
+              onClose={this.handleClose}
             />
           </div>
         ) : null}
@@ -161,7 +241,6 @@ class Monitors extends Component {
         aria-labelledby="delete-modal-title"
         aria-describedby="delete-modal-description"
         open={this.state.open}
-        onClose={this.handleClose}
       >
         <div className={classes.paper}>
           <Typography variant="h6" id="modal-title">
@@ -188,17 +267,102 @@ class Monitors extends Component {
       </Modal>
     );
 
+    const addMonitor = (
+      <React.Fragment>
+        <h2 className="section-title">Add website to monitor</h2>
+        {this.state.failure || this.state.warning ? (
+          <MySnackBar
+            variant={
+              this.state.warning
+                ? "warning"
+                : this.state.failure
+                ? "error"
+                : null
+            }
+            className={classes.margin}
+            message={this.state.msg}
+            onClose={this.handleClose}
+          />
+        ) : null}
+        <div className="create-monitor">
+          <TextField
+            label="URL Of The Website"
+            className={classes.textField}
+            value={this.state.newSiteUrl}
+            name="newSiteUrl"
+            onChange={this.handleChange}
+            margin="normal"
+            required
+          />
+          <TextField
+            label="Where To Email Alerts"
+            className={classes.textField}
+            value={this.state.email}
+            name="email"
+            onChange={this.handleChange}
+            margin="normal"
+            required
+          />
+          <TextField
+            label="The Name For The Monitor"
+            className={classes.textField}
+            value={this.state.newSiteName}
+            name="newSiteName"
+            onChange={this.handleChange}
+            margin="normal"
+          />
+          <FormControl variant="outlined" className={classes.formControl}>
+            <InputLabel
+              ref={ref => {
+                this.InputLabelRef = ref;
+              }}
+              htmlFor="interval-min"
+            >
+              Interval - Minutes
+            </InputLabel>
+            <Select
+              value={this.state.interval}
+              onChange={this.handleChange}
+              input={
+                <OutlinedInput
+                  labelWidth={this.state.labelWidth}
+                  name="interval"
+                  id="interval-min"
+                  required
+                />
+              }
+            >
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
+              {this.generateSelectItems()}
+            </Select>
+          </FormControl>
+        </div>
+        <Button
+          color="primary"
+          variant="outlined"
+          onClick={() => this.addWebsite()}
+        >
+          Start monitoring
+        </Button>
+      </React.Fragment>
+    );
+
     return (
       <article className="uptime-article">
         {searchBar}
         {modal}
         <section className="section-container table">
           {isLoaded ? (
-            <PaginatedTable
-              monitors={this.state.filteredMonitors}
-              header={this.state.tableHeaders}
-              askToDelete={this.askToDelete}
-            />
+            <React.Fragment>
+              <h2 className="section-title">Websites being monitored</h2>
+              <PaginatedTable
+                monitors={this.state.filteredMonitors}
+                header={this.state.tableHeaders}
+                askToDelete={this.askToDelete}
+              />
+            </React.Fragment>
           ) : this.state.failToFetch ? (
             <div className="error">
               <h1>Server Unresponsive</h1>
@@ -209,6 +373,9 @@ class Monitors extends Component {
           ) : (
             <div className="spinner" />
           )}
+        </section>
+        <section className="section-container add-website">
+          {addMonitor}
         </section>
       </article>
     );

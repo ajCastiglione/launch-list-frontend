@@ -197,7 +197,7 @@ class PaginatedTable extends React.Component {
                         className="btn-container"
                       >
                         <Link className="btn" to={`/monitor?id=${row._id}`}>
-                          Edit
+                          View
                         </Link>
                       </Button>
                     </TableCell>
@@ -222,7 +222,7 @@ class PaginatedTable extends React.Component {
             <TableFooter>
               <TableRow>
                 <TablePagination
-                  rowsPerPageOptions={[5, 10, 25]}
+                  rowsPerPageOptions={[5, 10]}
                   colSpan={1}
                   count={rows.length}
                   rowsPerPage={rowsPerPage}
