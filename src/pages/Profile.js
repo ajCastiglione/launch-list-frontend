@@ -325,7 +325,14 @@ class Profile extends Component {
       <article className="profile-article">
         <h1
           className="article-title"
-          style={title_bg ? { backgroundImage: `url(${title_bg})` } : null}
+          style={
+            title_bg
+              ? {
+                  background: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url(${title_bg}) no-repeat center
+                  center / cover`
+                }
+              : null
+          }
         >
           Profile
         </h1>

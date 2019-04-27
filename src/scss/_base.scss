@@ -152,12 +152,11 @@ Body Section
 // Login page
 .login-landing,
 .signup {
+  position: relative;
   background-image: url("https://s3.amazonaws.com/minervalists/cityBg.jpg");
   height: 100vh;
   background-repeat: no-repeat;
   background-size: cover;
-  background-color: #444;
-  background-blend-mode: multiply;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -175,6 +174,7 @@ Body Section
     background: $gradient;
     border-radius: 10px;
     padding: 0 15px 1rem;
+    z-index: 2;
     .btn-primary {
       background: $lightblue;
       &:hover {
@@ -217,6 +217,15 @@ Body Section
       font-weight: 300;
     }
   }
+  &:after {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(99, 99, 99, 0.4);
+  }
 }
 // Signup page
 .signup {
@@ -244,7 +253,9 @@ Body Section
 
 .home-article {
   .article-title {
-    background-image: url("https://s3.amazonaws.com/minervalists/Home_bg.jpg");
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+      url("https://s3.amazonaws.com/minervalists/Home_bg.jpg") no-repeat center
+        center / cover;
   }
   .section-container {
     padding: 2rem 10px;
@@ -288,13 +299,10 @@ Body Section
 }
 
 .article-title {
-  background-image: url("https://s3.amazonaws.com/minervalists/panorama-bg.jpg");
-  background-position: center center;
-  background-size: cover;
-  background-repeat: no-repeat;
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("https://s3.amazonaws.com/minervalists/panorama-bg.jpg") no-repeat
+      center center / cover;
   color: $white;
-  background-color: $gray;
-  background-blend-mode: multiply;
   margin: 0;
   padding: 4.5rem 10px;
   font-size: 35px;
@@ -345,7 +353,9 @@ Body Section
 // All lists pg
 .all-lists-article {
   .article-title {
-    background-image: url("https://s3.amazonaws.com/minervalists/all-lists-skyline.jpg");
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+      url("https://s3.amazonaws.com/minervalists/all-lists-skyline.jpg")
+        no-repeat center center / cover;
   }
 }
 
@@ -422,7 +432,9 @@ Body Section
 // Single Type View
 .all-lists-type {
   .article-title {
-    background-image: url("https://s3.amazonaws.com/minervalists/all-lists-skyline.jpg");
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+      url("https://s3.amazonaws.com/minervalists/all-lists-skyline.jpg")
+        no-repeat center center / cover;
   }
 }
 
@@ -658,7 +670,9 @@ User Section
 // Add user
 .add-user-article {
   .article-title {
-    background-image: url("https://s3.amazonaws.com/minervalists/add-user-bg.jpeg");
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+      url("https://s3.amazonaws.com/minervalists/add-user-bg.jpeg") no-repeat
+        center center / cover;
   }
 }
 
